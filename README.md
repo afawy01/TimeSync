@@ -12,3 +12,5 @@
        * General Chat
        * Schedule Meeting popup
 ## Done:
+  1. Pre-planning
+  2. System Structures
