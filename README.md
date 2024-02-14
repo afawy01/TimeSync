@@ -1,5 +1,5 @@
 # TimeSync
-In Progress:
+# In Progress:
   -Make Logo
   -Figure out what DB we will be using
     *Create DB
@@ -11,4 +11,4 @@ In Progress:
     *Calender Schedule
     *General Chat
     *Schedule Meeting popup
-Done:
+# Done:
