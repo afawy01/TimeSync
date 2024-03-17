@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .customer-service {
+        margin-right: auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        margin: 0 10px;
+        padding: 10px 20px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .tab:hover {
+        background-color: #ddd;
+    }
+
+    .meeting-room {
+        display: block;
+        margin: 0 auto;
+        width: 500px;
+        height: 300px; 
+        background-image: url('meeting.gif');
+        background-size: cover;
+        background-position: center;
+        border: none; 
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    .meeting-room:hover {
+      
+    }
+
+    .clickable {
+        text-align: center;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .clickable:hover {
+        color: #666;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
+    </div>
+    <div class="tabs">
+        <div class="tab" onclick="location.href='create-group.html'">Create Group</div>
+        <div class="tab" onclick="location.href='meeting.html'">Meeting</div>
+        <div class="tab" onclick="location.href='login.html'">Login</div>
+    </div>
+    <div class="meeting-room" onclick="location.href='meeting.html'"></div>
+    <div class="clickable" onclick="location.href='meeting.html'">Click here to enter the meeting room</div>
+</div>
+</body>
+</html>
