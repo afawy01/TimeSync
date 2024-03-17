@@ -2,9 +2,9 @@
 2. In your terminal 'cd' to a location you want to put your app in
 3. In terminal,
 
-  <br>  mkdir timesync <br />
-    cd timesync <br />
-    npm init -y <br />
+    <pre> mkdir timesync</pre>
+    <pre>cd timesync</pre>
+    <pre>npm init -y </pre>
 
 # TimeSync
 ## In Progress:
