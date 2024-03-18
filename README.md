@@ -1,5 +1,6 @@
 1. Install Node.JS with Express (sqlite framework)
    <pre>npm install sqlite3</pre>
+   <pre>npm install express</pre>
 3. In your terminal 'cd' to a location you want to put your app in
 4. In terminal,
 
