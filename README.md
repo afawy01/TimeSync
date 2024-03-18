@@ -1,6 +1,7 @@
-1. Install Node.JS with Express (sqlite framework) 
-2. In your terminal 'cd' to a location you want to put your app in
-3. In terminal,
+1. Install Node.JS with Express (sqlite framework)
+   <pre>npm install sqlite3</pre>
+3. In your terminal 'cd' to a location you want to put your app in
+4. In terminal,
 
     <pre> mkdir timesync</pre>
     <pre>cd timesync</pre>
