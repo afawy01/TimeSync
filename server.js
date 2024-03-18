@@ -15,7 +15,7 @@ db.serialize(function() {
 });
 
 app.get('/', (req, res) => {
-  res.send('TimeSync Server is running!');
+  res.redirect('/user.html');
 });
 
 // Add any new endpoints here
