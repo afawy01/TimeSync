@@ -45,14 +45,19 @@ function openGroupCreationForm() {
     document.getElementById("groupForm").style.display = "block";
 }
 
+function closeGroupCreationForm() {
+    document.getElementById("groupForm").style.display = "none";
+}
+
 function submitForm() {
     const groupName = document.getElementById('groupNameInput').value;
+    const groupDescription = document.getElementById('groupDescriptionInput').value;
     fetch('/group', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: groupName, user_id: 1 }),
+        body: JSON.stringify({ title: groupName, description: groupDescription }),
     })
     .then(response => response.json())
     .then (data => {
@@ -63,8 +68,4 @@ function submitForm() {
     .catch(error => {
         console.error('Error: ', error);
     })
-}
-
-function closeGroupCreationForm() {
-    document.getElementById("groupForm").style.display = "none";
 }

@@ -48,9 +48,9 @@ app.post('/meeting', (req, res) => {
 //Add Group
 app.post('/group', (req, res) => {
     console.log(req.body)
-    const { title, user_id } = req.body;
+    const { title, description } = req.body;
     const sql = `INSERT INTO TeamsChannels (ChannelName, Description) VALUES (?, ?)`;
-    db.run(sql, [title, user_id], function(err) {
+    db.run(sql, [title, description], function(err) {
       if (err) {
         return console.error(err.message);
       }
