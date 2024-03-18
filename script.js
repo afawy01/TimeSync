@@ -41,15 +41,23 @@ document.getElementById('meetingForm').addEventListener('submit', function(e) {
     });
 });
 
-function openGroupCreationForm() {
+function openGroupForm() {
     document.getElementById("groupForm").style.display = "block";
 }
 
-function closeGroupCreationForm() {
+function closeGroupForm() {
     document.getElementById("groupForm").style.display = "none";
 }
 
-function submitForm() {
+function openMeetingForm() {
+    document.getElementById("meetingForm").style.display = "block";
+}
+
+function closeMeetingForm() {
+    document.getElementById("meetingForm").style.display = "none";
+}
+
+function submitGroupForm() {
     const groupName = document.getElementById('groupNameInput').value;
     const groupDescription = document.getElementById('groupDescriptionInput').value;
     fetch('/group', {
@@ -62,10 +70,33 @@ function submitForm() {
     .then(response => response.json())
     .then (data => {
         console.log(data);
+        //alert('Created group "' + groupName + '"')
+        closeGroupForm()
+    })
+    .catch(error => {
+        console.error('Error: ', error);
+    })
+}
+
+function submitMeetingForm() {
+    const meetingName = document.getElementById('meetingTimeInput').value;
+    const meetingDescription = document.getElementById('meetingDescriptionInput').value;
+    const meetingDate = document.getElementById('meetingDateInput').value;
+    const meetingTime = document.getElementById('meetingTimeInput').value;
+    /*fetch('/meeting', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: meetingName, description: meetingDescription }),
+    })
+    .then(response => response.json())
+    .then (data => {
+        console.log(data);
         alert('Created group "' + groupName + '"')
         closeGroupCreationForm()
     })
     .catch(error => {
         console.error('Error: ', error);
-    })
+    })*/
 }

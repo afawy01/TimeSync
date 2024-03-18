@@ -35,9 +35,9 @@ app.post('/user', (req, res) => {
 
 //Add Meeting
 app.post('/meeting', (req, res) => {
-    const { title, user_id } = req.body;
-    const sql = `INSERT INTO meetings (title, UserID) VALUES (?, ?)`;
-    db.run(sql, [title, user_id], function(err) {
+    const { title, description } = req.body;
+    const sql = `INSERT INTO meetings (Title, Description) VALUES (?, ?)`;
+    db.run(sql, [title, description], function(err) {
       if (err) {
         return console.error(err.message);
       }
