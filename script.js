@@ -40,3 +40,31 @@ document.getElementById('meetingForm').addEventListener('submit', function(e) {
         console.error('Error:', error);
     });
 });
+
+function openGroupCreationForm() {
+    document.getElementById("groupForm").style.display = "block";
+}
+
+function submitForm() {
+    const groupName = document.getElementById('groupNameInput').value;
+    fetch('/group', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: groupName, user_id: 1 }),
+    })
+    .then(response => response.json())
+    .then (data => {
+        console.log(data);
+        alert('Created group "' + groupName + '"')
+        closeGroupCreationForm()
+    })
+    .catch(error => {
+        console.error('Error: ', error);
+    })
+}
+
+function closeGroupCreationForm() {
+    document.getElementById("groupForm").style.display = "none";
+}

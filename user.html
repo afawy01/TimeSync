@@ -12,12 +12,31 @@
         <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
     </div>
     <div class="tabs">
-        <div class="tab" onclick="location.href='create-group.html'">Create Group</div>
+        <!--<div class="tab" onclick="location.href='create-group.html'">Create Group</div>-->
+        <div class="tab" onclick="openGroupCreationForm()">Create Group</div>
         <div class="tab" onclick="location.href='meeting.html'">Meeting</div>
         <div class="tab" onclick="location.href='login.html'">Login</div>
     </div>
     <div class="meeting-room" onclick="location.href='meeting.html'"></div>
     <div class="clickable" onclick="location.href='meeting.html'">Click here to enter the meeting room</div>
+</div>
+
+<div class="form-popup" id="groupForm">
+    <div class="popup" id="popup">
+
+        <span class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p>Group Creation</p>
+
+            <input type="text" placeholder="Group Name" id="groupNameInput">
+
+            <button onclick="submitForm()">Sign Up</button>
+
+        </div>
+
+</div>
 </div>
 <script src="script.js"></script>
 </body>

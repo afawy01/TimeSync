@@ -47,8 +47,9 @@ app.post('/meeting', (req, res) => {
 
 //Add Group
 app.post('/group', (req, res) => {
+    console.log(req.body)
     const { title, user_id } = req.body;
-    const sql = `INSERT INTO TeamsChannels (ChannelName, UserID) VALUES (?, ?)`;
+    const sql = `INSERT INTO TeamsChannels (ChannelName, Description) VALUES (?, ?)`;
     db.run(sql, [title, user_id], function(err) {
       if (err) {
         return console.error(err.message);
@@ -56,6 +57,7 @@ app.post('/group', (req, res) => {
       res.send({ message: 'Group added', id: this.lastID });
     });
   });
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
