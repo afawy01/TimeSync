@@ -1,5 +1,5 @@
-1. Install Node.JS with Express (sqlite framework)
-   <pre>npm install sqlite3</pre>
+1. Install Node.JS with Express, body-parser, socket.io. Install python libraries (Flask and flask-sqlalchemy)  (sqlite framework)
+   <pre>npm install sqlite3 express body-parser </pre>
    <pre>npm install express</pre>
 3. In your terminal 'cd' to a location you want to put your app in
 4. In terminal,
