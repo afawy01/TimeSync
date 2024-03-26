@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Home Page</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
+    </div>
+    <div class="tabs">
+        <!--<div class="tab" onclick="location.href='create-group.html'">Create Group</div>-->
+        <div class="tab" onclick="openGroupForm()">Create Group</div>
+        <div class="tab" onclick="openMeetingForm()">Meeting</div>
+        <div class="tab" onclick="location.href='login.html'">Login</div>
+    </div>
+    <div class="meeting-room" onclick="location.href='meeting.html'"></div>
+    <div class="clickable" onclick="location.href='meeting.html'">Click here to enter the meeting room</div>
+</div>
+
+<div class="form-popup" id="groupForm">
+    <div class="popup" id="popup">
+
+        <span onclick="closeGroupForm()"class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p>Group Creation</p>
+
+            <input type="text" placeholder="Group Name" id="groupNameInput"><br>
+            <input type="text" placeholder="Group Description" id="groupDescriptionInput"><br>
+            <p>Enable Team Ranks?</p>
+            <input type="radio" id="yes" name="enable_team_ranks" value="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" id="no" name="enable_team_ranks" value="no">
+            <label for="no">No</label><br><br>
+            <button onclick="submitGroupForm()">Create Group</button>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="form-popup" id="meetingForm">
+    <div class="popup" id="popup">
+        <span onclick="closeMeetingForm()" class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p>Meeting Creation</p>
+
+            <input type="text" placeholder="Meeting Name" id="meetingNameInput"><br>
+            <input type="text" placeholder="Meeting Description" id="meetingDescriptionInput"><br>
+            <input type="date" placeholder="Date" id="meetingDateInput"><br>
+            <input type="time" placeholder="Time" id="meetingTimeInput"><br>
+            <button onclick="submitMeetingForm()">Create Group</button>
+
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+<script src="/scripts/socket.io/client-dist/socket.io.js"></script>
+</body>
+</html>
