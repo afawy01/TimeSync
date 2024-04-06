@@ -1,6 +1,8 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 
 const db = new sqlite3.Database('./TimeSync.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -23,15 +25,31 @@ app.get('/', (req, res) => {
 
 //Add New Users
 app.post('/user', (req, res) => {
-    const { username } = req.body;
-    const sql = `INSERT INTO users (username) VALUES (?)`;
-    db.run(sql, [username], function(err) {
+  // TODO: hash passwords
+    const { username, password, email } = req.body;
+    const sql = `INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, 'User')`;
+    db.run(sql, [username, password, email], function(err) {
       if (err) {
         return console.error(err.message);
       }
       res.send({ message: 'User added', id: this.lastID });
     });
   });
+
+
+// CHECKING USER LOGIN
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
+  db.all(sql, [username, password], function(err, rows) {
+    if (err) {
+      return console.error(err.message);
+    }
+    if (rows.length > 0) {
+      console.log(rows);
+    }
+  })
+})
 
 //Add Meeting
 app.post('/meeting', (req, res) => {

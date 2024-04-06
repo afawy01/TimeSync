@@ -2,7 +2,7 @@
 <html> 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> Login Page </title>
+<title> Registration Page </title>
 <style> 
 Body {
   font-family: Calibri, Helvetica, sans-serif;
@@ -41,21 +41,23 @@ button {
 </style> 
 </head>  
 <body>  
-    <center> <h1> Login </h1> </center> 
+    <center> <h1> Registration </h1> </center> 
     <form>
         <div class="container"> 
             <label>Username : </label> 
             <input type="text" placeholder="Enter Username" name="username" id="usernameInput" required>
             <label>Password : </label> 
             <input type="password" placeholder="Enter Password" name="password" id="passwordInput" required>
-            <button type="submit" onclick="submitUserLogin()">Login</button> 
-            <a href = 'registration.html'>Register</a>
+            <label>Email : </label> 
+            <input type="password" placeholder="Enter Email" name="email" id="emailInput" required>
+            <button type="submit" onclick="submitUserRegistration()">Register</button> 
+            <a href = 'login.html'>Login</a>
             <br>
             <!--<input type="checkbox" checked="checked"> Remember me 
             <button type="button" class="cancelbtn"> Cancel</button> -->
             Forgot <a href="#"> password? </a> 
         </div> 
-    </form>   
+    </form>
+<script src="registration.js"></script>
 </body>
-<script src="login.js"></script>
 </html>
