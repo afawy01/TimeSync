@@ -10,7 +10,14 @@ function submitUserLogin() {
         },
         body: JSON.stringify({ username: username, password: password }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (response.redirected) {
+            // TODO: Fix this redirect on server side
+            window.location.href = '/';
+        } else {
+            response.json()
+        }
+    })
     .then (data => {
         console.log(data);
     })

@@ -2,7 +2,9 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const sqliteStore = require('connect-sqlite3')(session);
+const path = require('path');
 
 const db = new sqlite3.Database('./TimeSync.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -16,12 +18,40 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(express.static('.'));
 
+app.use(session({
+  store: new sqliteStore,
+  secret: 'test',
+  cookie: { maxAge: 24*60*60*1000 }
+}));
+
+// URL Visits
 app.get('/', (req, res) => {
-  res.redirect('/user.html');
+  res.sendFile(path.join(__dirname, 'user.html'))
+  const userId = req.session.userId;
+
+  if (userId) {
+    console.log(userId);
+  } else {
+    console.log('No user in session');
+  }
 });
+
+app.get('/user', (req, res) => {
+  // Check if user cookie exists
+  console.log(req.session)
+  res.json({username : req.session.username})
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'))
+})
 
 // Add any new endpoints here
 //Notes: Add CRUD functions
+
+app.get('/settings', isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, 'settings.html'))
+})
 
 //Add New Users
 app.post('/user', (req, res) => {
@@ -36,6 +66,10 @@ app.post('/user', (req, res) => {
     });
   });
 
+function isAuthenticated (req, res, next) {
+  if (req.session.user) next()
+}
+
 
 // CHECKING USER LOGIN
 app.post('/login', (req, res) => {
@@ -45,8 +79,11 @@ app.post('/login', (req, res) => {
     if (err) {
       return console.error(err.message);
     }
-    if (rows.length > 0) {
-      console.log(rows);
+    if (rows.length == 1) {
+      // Authenticate user cookie
+      req.session.userId = rows[0]["UserID"]
+      req.session.username = rows[0]["Username"]
+      res.redirect('/');
     }
   })
 })

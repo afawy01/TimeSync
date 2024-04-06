@@ -1,4 +1,4 @@
-document.getElementById('userForm').addEventListener('submit', function(e) {
+/*document.getElementById('userForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
 
@@ -17,7 +17,7 @@ document.getElementById('userForm').addEventListener('submit', function(e) {
     .catch((error) => {
         console.error('Error:', error);
     });
-});
+});*/
 
 document.getElementById('meetingForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -99,4 +99,11 @@ function submitMeetingForm() {
     .catch(error => {
         console.error('Error: ', error);
     })*/
+}
+
+window.onload = function() {
+    const userData = fetch('/user', {
+        method: 'GET',
+    }).then(response => response.json())
+    console.log(document.cookie);
 }
