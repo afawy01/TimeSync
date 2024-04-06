@@ -28,18 +28,15 @@ app.use(session({
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'user.html'))
   const userId = req.session.userId;
-
-  if (userId) {
-    console.log(userId);
-  } else {
-    console.log('No user in session');
-  }
 });
 
 app.get('/user', (req, res) => {
   // Check if user cookie exists
-  console.log(req.session)
-  res.json({username : req.session.username})
+  if (req.session.userId) {
+    res.json({username : req.session.username})
+  } else {
+    res.json({error: 'User not logged in'})
+  }
 })
 
 app.get('/login', (req, res) => {
@@ -86,6 +83,11 @@ app.post('/login', (req, res) => {
       res.redirect('/');
     }
   })
+})
+
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
 })
 
 //Add Meeting

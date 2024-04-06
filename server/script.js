@@ -19,6 +19,8 @@
     });
 });*/
 
+//const { log } = require("npmlog");
+
 document.getElementById('meetingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
@@ -101,9 +103,36 @@ function submitMeetingForm() {
     })*/
 }
 
+function logout() {
+    fetch('/logout', {
+        method: 'POST',
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = '/';
+        }
+    })
+    .then(data => {
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
 window.onload = function() {
     const userData = fetch('/user', {
         method: 'GET',
-    }).then(response => response.json())
-    console.log(document.cookie);
+    })
+    .then(response => response.json())
+    .then(data => {
+        const loginButton = document.getElementById("loginButton");
+        const logoutButton = document.getElementById("logoutButton");
+        if (data["username"]) {
+            loginButton.style.display = "none";
+            logoutButton.style.display = "block";
+        } else {
+            loginButton.style.display = "block";
+            logoutButton.style.display = "none";
+        }
+    })
 }
