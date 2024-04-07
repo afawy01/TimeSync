@@ -150,6 +150,7 @@ window.onload = function() {
     })
     .then(response => response.json())
     .then(data => {
+        const teamListButton = document.getElementById("teamListButton");
         const loginButton = document.getElementById("loginButton");
         const logoutButton = document.getElementById("logoutButton");
         const meetingButton = document.getElementById("meetingButton");
@@ -157,12 +158,14 @@ window.onload = function() {
         const joinGroupButton = document.getElementById("joinGroupButton");
         if (data["username"]) {
             loginButton.style.display = "none";
+            teamListButton.style.display = "block";
             logoutButton.style.display = "block";
             meetingButton.style.display = "block";
             groupButton.style.display = "block";
             joinGroupButton.style.display = "block";
         } else {
             loginButton.style.display = "block";
+            teamListButton.style.display = "none";
             logoutButton.style.display = "none";
             meetingButton.style.display = "none";
             groupButton.style.display = "none";

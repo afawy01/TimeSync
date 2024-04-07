@@ -13,7 +13,11 @@ function submitUserRegistration() {
     })
     .then(response => response.json())
     .then (data => {
-        console.log(data);
+        if (data['redirect']) {
+            window.location.href = data['redirect'];
+        } else {
+            alert('User already exists');
+        }
     })
     .catch(error => {
         console.error('Error: ', error);

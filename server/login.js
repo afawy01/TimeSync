@@ -10,16 +10,14 @@ function submitUserLogin() {
         },
         body: JSON.stringify({ username: username, password: password }),
     })
-    .then(response => {
-        if (response.redirected) {
+    .then(response => response.json())
+    .then(data => {
+        if (data['redirect']) {
             // TODO: Fix this redirect on server side
-            window.location.href = '/';
-        } else {
-            response.json()
+            window.location.href = data['redirect'];
+        } else if (data['error']) {
+            alert('Login Incorrect');
         }
-    })
-    .then (data => {
-        console.log(data);
     })
     .catch(error => {
         console.error('Error: ', error);
