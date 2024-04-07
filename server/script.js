@@ -43,6 +43,14 @@ document.getElementById('meetingForm').addEventListener('submit', function(e) {
     });
 });
 
+function openGroupJoinForm() {
+    document.getElementById("groupJoinForm").style.display = "block";
+}
+
+function closeGroupJoinForm() {
+    document.getElementById("groupJoinForm").style.display = "none";
+}
+
 function openGroupForm() {
     document.getElementById("groupForm").style.display = "block";
 }
@@ -103,6 +111,22 @@ function submitMeetingForm() {
     })*/
 }
 
+function joinGroup() {
+    const groupCode = document.getElementById('groupCodeInput').value;
+    console.log('ok')
+    fetch('/joingroup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ joincode: groupCode })
+    }).then(response => {
+
+    }).catch(error => {
+        console.error('Error: ', error);
+    })
+}
+
 function logout() {
     fetch('/logout', {
         method: 'POST',
@@ -113,6 +137,7 @@ function logout() {
         }
     })
     .then(data => {
+        closeGroupJoinForm()
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -127,12 +152,21 @@ window.onload = function() {
     .then(data => {
         const loginButton = document.getElementById("loginButton");
         const logoutButton = document.getElementById("logoutButton");
+        const meetingButton = document.getElementById("meetingButton");
+        const groupButton = document.getElementById("groupButton");
+        const joinGroupButton = document.getElementById("joinGroupButton");
         if (data["username"]) {
             loginButton.style.display = "none";
             logoutButton.style.display = "block";
+            meetingButton.style.display = "block";
+            groupButton.style.display = "block";
+            joinGroupButton.style.display = "block";
         } else {
             loginButton.style.display = "block";
             logoutButton.style.display = "none";
+            meetingButton.style.display = "none";
+            groupButton.style.display = "none";
+            joinGroupButton.style.display = "none";
         }
     })
 }

@@ -13,8 +13,9 @@
     </div>
     <div class="tabs">
         <!--<div class="tab" onclick="location.href='create-group.html'">Create Group</div>-->
-        <div class="tab" onclick="openGroupForm()">Create Group</div>
-        <div class="tab" onclick="openMeetingForm()">Meeting</div>
+        <div id="groupButton" class="tab" onclick="openGroupForm()">Create Group</div>
+        <div id="joinGroupButton" class="tab" onclick="openGroupJoinForm()">Join Group</div>
+        <div id="meetingButton" class="tab" onclick="openMeetingForm()">Meeting</div>
         <div id="loginButton" class="tab" onclick="location.href='login'">Login</div>
         <div id="logoutButton" class="tab" onclick="logout()">Logout</div>
     </div>
@@ -39,6 +40,23 @@
             <input type="radio" id="no" name="enable_team_ranks" value="no">
             <label for="no">No</label><br><br>
             <button onclick="submitGroupForm()">Create Group</button>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="form-popup" id="groupJoinForm">
+    <div class="popup" id="popup">
+
+        <span onclick="closeGroupJoinForm()"class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p>Join Group</p>
+
+            <input type="text" placeholder="Group Code" id="groupCodeInput"><br>
+            <button onclick="joinGroup()">Join Group</button>
 
         </div>
 
