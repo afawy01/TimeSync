@@ -12,10 +12,13 @@
         <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
     </div>
     <div class="tabs">
-        <!--<div class="tab" onclick="location.href='create-group.html'">Create Group</div>-->
-        <div class="tab" onclick="openGroupForm()">Create Group</div>
-        <div class="tab" onclick="openMeetingForm()">Meeting</div>
-        <div class="tab" onclick="location.href='login.html'">Login</div>
+        <div id="teamListButton" class="tab" onclick="location.href='teamlist'">Team List</div>
+        <div id="groupButton" class="tab" onclick="openGroupForm()">Create Team</div>
+        <div id="joinGroupButton" class="tab" onclick="openGroupJoinForm()">Join Team</div>
+        <div id="meetingButton" class="tab" onclick="openMeetingForm()">Meeting</div>
+        <div id="calendarButton" class="tab" onclick="location.href='calendar.html'">Calendar</div>
+        <div id="loginButton" class="tab" onclick="location.href='login'">Login</div>
+        <div id="logoutButton" class="tab" onclick="logout()">Logout</div>
     </div>
     <div class="meeting-room" onclick="location.href='meeting.html'"></div>
     <div class="clickable" onclick="location.href='meeting.html'">Click here to enter the meeting room</div>
@@ -44,6 +47,23 @@
     </div>
 </div>
 
+<div class="form-popup" id="groupJoinForm">
+    <div class="popup" id="popup">
+
+        <span onclick="closeGroupJoinForm()"class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p>Join Group</p>
+
+            <input type="text" placeholder="Group Code" id="groupCodeInput"><br>
+            <button onclick="joinGroup()">Join Group</button>
+
+        </div>
+
+    </div>
+</div>
+
 <div class="form-popup" id="meetingForm">
     <div class="popup" id="popup">
         <span onclick="closeMeetingForm()" class="close" id="closePopup">&times;</span>
@@ -56,7 +76,7 @@
             <input type="text" placeholder="Meeting Description" id="meetingDescriptionInput"><br>
             <input type="date" placeholder="Date" id="meetingDateInput"><br>
             <input type="time" placeholder="Time" id="meetingTimeInput"><br>
-            <button onclick="submitMeetingForm()">Create Group</button>
+            <button onclick="submitMeetingForm()">Create Meeting</button>
 
         </div>
     </div>
