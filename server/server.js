@@ -143,7 +143,7 @@ app.post('/api/send-message', (req, res) => {
 
 // Endpoint to get the chat logs for a selected team
 app.get('/api/chat-logs', (req, res) => {
-  const { channelIdId } = req.query; 
+  const { channelId } = req.query.id; 
   const query = `SELECT * FROM Messages WHERE ChannelID = ?`;
 
   db.all(query, [channelId], (err, messages) => {

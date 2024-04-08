@@ -1,3 +1,5 @@
+let selectedChannelID = null
+
 window.onload = function() {
     fetch('/user', { method: 'GET' })
     .then(response => response.json())
@@ -14,7 +16,8 @@ window.onload = function() {
 
             let itemButton = document.createElement("button");
             itemButton.textContent = '>';
-            itemButton.onclick = () => loadChatroomForTeam(teamInfo.ChannelID); // WIP Load chatroom for team
+            console.log(teamInfo)
+            itemButton.onclick = () => loadChatroomForTeam(teamInfo["ChannelID"]); // WIP Load chatroom for team
             item.appendChild(itemButton);
 
             list.appendChild(item);
@@ -24,9 +27,11 @@ window.onload = function() {
 };
 
 function loadChatroomForTeam(channelId) {
-    fetch(`/api/chat-logs?teamId=${channelId}`)
+    selectedChannelID = channelId
+    fetch(`/api/chat-logs?id=${channelId}`)
     .then(response => response.json())
     .then(chatLogs => {
+        if(chatLogs["error"]) {return}
         const chatroom = document.querySelector('.chat-messages');
         chatroom.innerHTML = '';
         chatLogs.forEach(log => {
@@ -54,13 +59,13 @@ function updateChatroomLogs(chatLogs) {
 
 document.getElementById('send-message').addEventListener('click', () => {
     const messageContent = document.getElementById('message-content').value;
-    const channelId = localStorage.getItem('currentChannelId');
+    console.log(selectedChannelID)
 
-    if (messageContent.trim() && channelId) {
+    if (messageContent.trim() && selectedChannelID) {
         fetch('/api/send-message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ channelId, message: messageContent.trim() }),
+            body: JSON.stringify({ channelId: selectedChannelID, message: messageContent.trim() }),
         })
         .then(response => {
             if (!response.ok) throw new Error('Failed to send message');
