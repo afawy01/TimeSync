@@ -102,6 +102,62 @@ app.get('/getteam', async (req, res) => {
   res.send({ teaminfo: teamInfo, teammembers: teamMembers })
 })
 
+// ----------WIP Functions -------------------------
+// Pull teams for users
+app.get('/api/user-teams', (req, res) => {
+  if (!req.session.userId) {
+      return res.status(401).json({ error: 'User not logged in' });
+  }
+  const userId = req.session.userId;
+  const query = `
+      SELECT tc.ChannelID, tc.ChannelName
+      FROM TeamsChannels tc
+      JOIN UserTeams ut ON tc.ChannelID = ut.ChannelID
+      WHERE ut.UserID = ?`;
+
+  db.all(query, [userId], (err, rows) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.json(rows);
+  });
+});
+
+// Endpoint to send a message to a team
+app.post('/api/send-message', (req, res) => {
+  const { channelId, message } = req.body;
+  const userId = req.session.userId;
+
+  if (!userId) return res.status(401).json({ error: 'User not authenticated' });
+
+  const query = `INSERT INTO Messages (ChannelID, UserID, MessageText) VALUES (?, ?, ?)`;
+
+  db.run(query, [channelId, userId, message], function(err) {
+      if (err) {
+          console.error(err.message);
+          return res.status(500).json({ error: 'Failed to send message' });
+      }
+      res.json({ success: 'Message sent successfully', messageId: this.lastID });
+  });
+});
+
+// Endpoint to get the chat logs for a selected team
+app.get('/api/chat-logs', (req, res) => {
+  const { channelIdId } = req.query; 
+  const query = `SELECT * FROM Messages WHERE ChannelID = ?`;
+
+  db.all(query, [channelId], (err, messages) => {
+      if (err) {
+          console.error(err.message);
+          return res.status(500).json({ error: "Internal Server Error" });
+      }
+      if (messages.length === 0) {
+          return res.status(404).json({ error: "No messages found for this team." });
+      }
+      res.json(messages);
+  });
+});
+// !--------------------------------------------------------------------
 //Add New Users
 app.post('/user', async (req, res) => {
   // TODO: hash passwords
