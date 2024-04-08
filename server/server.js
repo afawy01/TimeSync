@@ -79,8 +79,27 @@ app.get('/settings', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'settings.html'))
 })
 
-app.get('/teams', (req, res) => {
-  res.sendFile(path.join(__dirname, 'teams.html'))
+app.get('/teamlist', (req, res) => {
+  res.sendFile(path.join(__dirname, 'teamlist.html'))
+})
+
+app.get('/team', (req, res) => {
+  res.sendFile(path.join(__dirname, 'team.html'))
+})
+
+app.get('/getteam', async (req, res) => {
+  // TODO: Check user credentials if they are allowed to get this team's information
+  const channelID = req.query.id
+  if (!channelID) {
+    res.send({ error: 'No team ID given.'})
+  }
+  let sql = `SELECT * FROM TeamsChannels WHERE ChannelID = ?`
+  const teamInfo = await queryAllDB(sql, [channelID])
+
+  sql = `SELECT * FROM UserTeams WHERE ChannelID = ?`
+  const teamMembers = await queryAllDB(sql, [channelID])
+
+  res.send({ teaminfo: teamInfo, teammembers: teamMembers })
 })
 
 //Add New Users
@@ -126,6 +145,20 @@ app.post('/login', (req, res) => {
       res.send({ redirect: '/' })
     } else {
       res.send({ error: 'Incorrect Login' });
+    }
+  })
+})
+
+// User has selected a team from the list
+app.post('/team', (req, res) => {
+  const { ChannelID } = req.body;
+  const sql = `SELECT * FROM TeamsChannels WHERE ChannelID = ?`
+  db.all(sql, [ChannelID], function(err, rows) {
+    if (err) {
+      return console.error(err.message);
+    }
+    if (rows.length == 1) {
+
     }
   })
 })
