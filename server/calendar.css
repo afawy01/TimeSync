@@ -231,3 +231,8 @@ border-radius: 5px;
 color: #5a6cbf;
 height: 25px;
 }
+
+/* Event Creation */
+#left {
+padding-left: 20px;
+}
