@@ -64,7 +64,7 @@ function displayReminders() {
 			listItem.innerHTML =
 				`<strong>${event.title}</strong> -
 			${event.description} on
-			${eventDate.toDateString()}`;
+			${eventDate.toLocaleString()}`;
 
 			// Add a delete button for each reminder item
 			let deleteButton =
@@ -226,7 +226,7 @@ function createEventTooltip(date, month, year) {
 		let eventDate = new Date(event.date);
 		let eventText = `<strong>${event.title}</strong> -
 			${event.description} on
-			${eventDate.toTimeString()}`;
+			${eventDate.toLocaleString()}`;
 		let eventElement = document.createElement("p");
 		eventElement.innerHTML = eventText;
 		tooltip.appendChild(eventElement);

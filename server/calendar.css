@@ -236,3 +236,9 @@ height: 25px;
 #left {
 padding-left: 20px;
 }
+
+#eventDate {
+padding:5px;
+margin-top:10px;
+margin-bottom: 10px;
+}
