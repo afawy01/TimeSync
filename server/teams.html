@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #f4f4f4;
+        }
+
+        .list, .chatroom {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 20px;
+            width: 300px; /* You might want to adjust this width for the chatroom */
+        }
+
+        .list-header, .chatroom-header {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .list-header h2, .chatroom-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .teams-list, .chat-messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px; /* Adjust based on your preference */
+            overflow-y: auto;
+        }
+
+        .list-item, .chat-message {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .list-item:last-child, .chat-message:last-child {
+            border-bottom: none;
+        }
+
+        .list-item:hover, .chat-message:hover {
+            background-color: #f9f9f9;
+        }
+        .home-icon {
+            position: center;
+            top: 10px;
+            left: 10px;
+        }
+        
+        .home-icon a {
+            font-size: 30px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .home-icon a:hover {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-icon">
+        <a href="/" title="Home">&#x1F3E0;</a>
+    </div>
+
+    <div class="list">
+        <div class="list-header">
+            <h2>Teams</h2>
+        </div>
+        <ul class="teams-list">
+            <!-- Teams will show up teams.js -->
+        </ul>
+    </div>
+    <div class="chatroom">
+        <div class="chatroom-header">
+            <h2>Chatroom</h2>
+        </div>
+        <ul class="chat-messages">
+            <!-- Chat messages will show up with teams.js -->
+        </ul>
+        <div class="message-input">
+            <input type="text" id="message-content" placeholder="Type a message..." />
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+</body>
+<script src="teams.js"></script>
+</html>
