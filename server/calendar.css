@@ -219,3 +219,15 @@ body {
 	border-radius: 3px;
 	padding: 5px 1em;
 }
+
+/* Back button */
+.backHome {
+margin: 30px;
+}
+
+#back {
+border-color: #5a6cbf;
+border-radius: 5px;
+color: #5a6cbf;
+height: 25px;
+}
