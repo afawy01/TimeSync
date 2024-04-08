@@ -156,6 +156,7 @@ window.onload = function() {
         const meetingButton = document.getElementById("meetingButton");
         const groupButton = document.getElementById("groupButton");
         const joinGroupButton = document.getElementById("joinGroupButton");
+        const calendarButton = document.getElementById("calendarButton");
         if (data["username"]) {
             loginButton.style.display = "none";
             teamListButton.style.display = "block";
@@ -163,6 +164,7 @@ window.onload = function() {
             meetingButton.style.display = "block";
             groupButton.style.display = "block";
             joinGroupButton.style.display = "block";
+            calendarButton.style.display = "block";
         } else {
             loginButton.style.display = "block";
             teamListButton.style.display = "none";
@@ -170,6 +172,7 @@ window.onload = function() {
             meetingButton.style.display = "none";
             groupButton.style.display = "none";
             joinGroupButton.style.display = "none";
+            calendarButton.style.display = "none";
         }
     })
 }
