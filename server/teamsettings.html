@@ -107,11 +107,20 @@
 
     <div class="form-popup" id="kickConfirmation">
         <div class="popup" id="popup">
-            <span onclick="closeGroupJoinForm()"class="close" id="closePopup">&times;</span>
             <div class="popup-content">
                 <p>Are you sure?</p>
                 <button onclick="confirmKick()">Yes</button>
                 <button onclick="closeKickConfirmation()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-popup" id="roleConfirmation">
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <p>Are you sure?</p>
+                <button onclick="confirmRoleChange()">Yes</button>
+                <button onclick="closeRoleConfirmation()">No</button>
             </div>
         </div>
     </div>

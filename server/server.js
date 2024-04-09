@@ -192,12 +192,26 @@ app.post('/api/remove-member', (req, res) => {
 
   // TODO: Check role of userid to see if permitted to do this action
 
-  const sql = `DELETE FROM UserTeams WHERE UserID = ${userID} and ChannelID = ${channelID}`
+  const sql = `DELETE FROM UserTeams WHERE UserID = ${userID} AND ChannelID = ${channelID}`
   db.run(sql, (err) => {
     if (err) {
       console.error(err.message);
     } else {
       res.status(200).send("Successfully removed member");
+    }
+  })
+})
+
+app.post('/api/change-member-role', (req, res) => {
+  const { channelID, userID, role } = req.body
+  console.log(req.body)
+
+  const sql = `UPDATE UserTeams SET Role = '${role}' WHERE UserID = ${userID} AND ChannelID = ${channelID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message);
+    } else {
+      res.status(200).send("Successfully change member role")
     }
   })
 })
