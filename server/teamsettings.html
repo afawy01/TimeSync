@@ -105,6 +105,20 @@
     </div>
     <button>Disband Team</button>
 
+    <button class="button" href="#" onclick="show('copyCode')">Team Code</button>
+
+    <div class="form-popup" id="copyCode">
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <span onclick="hide('copyCode')" id="closePopup">&times;</span>
+                <p>Team Code</p>
+                <!-- Team code is placed here by teamsettings.js -->
+                <b><p id="teamCode"></p></b>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('teamCode').textContent)">Copy</button>
+            </div>
+        </div>
+    </div>
+
     <div class="form-popup" id="kickConfirmation">
         <div class="popup" id="popup">
             <div class="popup-content">

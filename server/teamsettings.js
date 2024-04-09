@@ -16,6 +16,9 @@ window.onload = async function() {
             return
         }
 
+        // Get teamcode for teamcode display button
+        document.getElementById("teamCode").textContent = data["teaminfo"][0]["JoinCode"]
+
         // TODO: This is probably not safe security wise but oh well
         // Check if user is team owner
         // User data for this specific team
@@ -142,4 +145,16 @@ function confirmRoleChange() {
 function closeRoleConfirmation() {
     document.getElementById('roleConfirmation').style.display = 'none';
     document.getElementById('roleConfirmation').value = null;
+}
+
+// Show/hide team code
+$ = function(id) {
+    return document.getElementById(id);
+}
+  
+var show = function(id) {
+    $(id).style.display ='block';
+}
+var hide = function(id) {
+    $(id).style.display ='none';
 }
