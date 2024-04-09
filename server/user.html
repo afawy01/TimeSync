@@ -31,19 +31,20 @@
 
         <div class="popup-content">
 
-            <p>Group Creation</p>
+            <p>Team Creation</p>
 
-            <input type="text" placeholder="Group Name" id="groupNameInput"><br>
-            <input type="text" placeholder="Group Description" id="groupDescriptionInput"><br>
+            <input type="text" placeholder="Team Name" id="groupNameInput"><br>
+            <input type="text" placeholder="Team Description" id="groupDescriptionInput"><br>
+            <label for="teamIconInput">Team Icon</label>
+            <input type="file" id="teamIconInput" accept="image/*"><br>
             <p>Enable Team Ranks?</p>
             <input type="radio" id="yes" name="enable_team_ranks" value="yes">
             <label for="yes">Yes</label>
             <input type="radio" id="no" name="enable_team_ranks" value="no">
             <label for="no">No</label><br><br>
-            <button onclick="submitGroupForm()">Create Group</button>
+            <button onclick="submitGroupForm()">Create Team</button>
 
         </div>
-
     </div>
 </div>
 
@@ -54,10 +55,10 @@
 
         <div class="popup-content">
 
-            <p>Join Group</p>
+            <p>Join Team</p>
 
-            <input type="text" placeholder="Group Code" id="groupCodeInput"><br>
-            <button onclick="joinGroup()">Join Group</button>
+            <input type="text" placeholder="Team Code" id="groupCodeInput"><br>
+            <button onclick="joinGroup()">Join Team</button>
 
         </div>
 

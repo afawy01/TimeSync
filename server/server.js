@@ -10,7 +10,7 @@ const db = new sqlite3.Database('./TimeSync.db', sqlite3.OPEN_READWRITE, (err) =
     if (err) {
         console.error(err.message);
     }
-    //db.run('CREATE TABLE IF NOT EXISTS "UserTeams" ( "EntryID" INTEGER, "UserID" INTEGER, "ChannelID" INTEGER, "Role" TEXT, PRIMARY KEY("EntryID" AUTOINCREMENT));');
+    //db.run('CREATE TABLE IF NOT EXISTS "UserMeetings" ( "MeetingID" INTEGER, "UserID" INTEGER, "Title" TEXT, "Description" TEXT, MeetingDate DATETIME, PRIMARY KEY("MeetingID" AUTOINCREMENT));');
     console.log('Connected to the TimeSync SQLite database.');
 });
 
@@ -40,7 +40,6 @@ app.use(session({
 // URL Visits
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'user.html'))
-  const userId = req.session.userId;
 });
 
 app.get('/user', async (req, res) => {
@@ -175,10 +174,21 @@ app.get('/api/chat-logs', (req, res) => {
   });
 });
 
+app.get('/api/get-user-meetings', (req, res) => {
+  const userID = req.session.userId
+
+  const sql = `SELECT * FROM UserMeetings WHERE UserID = ${userID}`
+  db.all(sql, (err, meetings) => {
+    if (err) {
+      console.error(err.message);
+    }
+    res.json(meetings);
+  })
+})
+
 app.post('/api/remove-member', (req, res) => {
   const { channelID, userID } = req.body
   const userId = req.session.userId;
-
   if (!userId) return res.status(401).json({ error: 'User not authenticated' });
 
   // TODO: Check role of userid to see if permitted to do this action
@@ -189,6 +199,35 @@ app.post('/api/remove-member', (req, res) => {
       console.error(err.message);
     } else {
       res.status(200).send("Successfully removed member");
+    }
+  })
+})
+
+app.post('/api/add-user-meeting', (req, res) => {
+  const { title, description, date } = req.body
+  const userID = req.session.userId
+
+  const sql = `INSERT INTO UserMeetings (userid, title, description, meetingdate) VALUES (?, ?, ?, ?)`;
+  db.run(sql, [userID, title, description, date], function(err) {
+    if(err) {
+      return console.error(err.message);
+    }
+    res.status(200).send({ message: 'User meeting saved successfully.' })
+  })
+
+})
+
+app.post('/api/remove-user-meeting', (req, res) => {
+  const { meetingID } = req.body
+  const userID = req.session.userId
+  console.log(meetingID)
+
+  const sql = `DELETE FROM UserMeetings WHERE UserID = ${userID} AND MeetingID = ${meetingID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      res.status(200).send({ message: 'User meeting deleted successfully.'})
     }
   })
 })
@@ -276,7 +315,7 @@ app.post('/group', (req, res) => {
     let joincode = crypto.randomBytes(4).toString('base64');
     console.log(joincode);
     console.log(req.body)
-    const { title, description } = req.body;
+    const { title, description, icon } = req.body;
     let sql = `INSERT INTO TeamsChannels (ChannelName, Description, JoinCode) VALUES (?, ?, ?)`;
     db.run(sql, [title, description, joincode], function(err) {
       if (err) {

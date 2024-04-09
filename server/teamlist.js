@@ -23,7 +23,6 @@ window.onload = function() {
             item.appendChild(itemButton);
             itemButton.onclick = function() {
                 console.log(this.parentElement.textContent)
-                // TODO: Get better way of removing > from text instead of substring
                 window.location.href = `/team?id=${this.value}`
             }
         }

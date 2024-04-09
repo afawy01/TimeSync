@@ -70,6 +70,7 @@ function closeMeetingForm() {
 function submitGroupForm() {
     const groupName = document.getElementById('groupNameInput').value;
     const groupDescription = document.getElementById('groupDescriptionInput').value;
+    //const groupIcon = document.getElementById('teamIconInput').value;
     fetch('/group', {
         method: 'POST',
         headers: {

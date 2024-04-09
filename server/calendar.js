@@ -1,5 +1,18 @@
 let events = [];
 
+window.onload = async function() {
+	await fetch('/api/get-user-meetings', {
+		method: 'GET'
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data)
+		events = data
+		// Call the showCalendar function initially to display the calendar
+		showCalendar(currentMonth, currentYear);
+	})
+}
+
 let eventDateInput =
 	document.getElementById("eventDate");
 let eventTitleInput =
@@ -22,11 +35,23 @@ function addEvent() {
 
 		events.push(
 			{
-				id: eventId, date: date,
-				title: title,
-				description: description
+				MeetingDate: date,
+				Title: title,
+				Description: description
 			}
 		);
+		fetch('/api/add-user-meeting', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ title: title, description: description, date: date })
+		}).then(response => {
+			if (response.status == 200) {
+				window.location.href='/calendar.html'
+			}
+		})
+
 		showCalendar(currentMonth, currentYear);
 		eventDateInput.value = "";
 		eventTitleInput.value = "";
@@ -48,6 +73,18 @@ function deleteEvent(eventId) {
 		showCalendar(currentMonth, currentYear);
 		displayReminders();
 	}
+	console.log(eventId)
+	fetch('/api/remove-user-meeting', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ meetingID: eventId })
+	}).then(response => {
+		if (response.status == 200) {
+			window.location.href='/calendar.html'
+		}
+	})
 }
 
 // Function to display reminders
@@ -55,15 +92,15 @@ function displayReminders() {
 	reminderList.innerHTML = "";
 	for (let i = 0; i < events.length; i++) {
 		let event = events[i];
-		let eventDate = new Date(event.date);
+		let eventDate = new Date(event.MeetingDate);
 		if (eventDate.getMonth() ===
 			currentMonth &&
 			eventDate.getFullYear() ===
 			currentYear) {
 			let listItem = document.createElement("li");
 			listItem.innerHTML =
-				`<strong>${event.title}</strong> -
-			${event.description} on
+				`<strong>${event.Title}</strong> -
+			${event.Description} on
 			${eventDate.toLocaleString()}`;
 
 			// Add a delete button for each reminder item
@@ -72,7 +109,7 @@ function displayReminders() {
 			deleteButton.className = "delete-event";
 			deleteButton.textContent = "Delete";
 			deleteButton.onclick = function () {
-				deleteEvent(event.id);
+				deleteEvent(event.MeetingID);
 			};
 
 			listItem.appendChild(deleteButton);
@@ -135,7 +172,7 @@ document.getElementById("thead-month").innerHTML = $dataHead;
 
 monthAndYear =
 	document.getElementById("monthAndYear");
-showCalendar(currentMonth, currentYear);
+//showCalendar(currentMonth, currentYear);
 
 // Function to navigate to the next month
 function next() {
@@ -163,6 +200,7 @@ function jump() {
 
 // Function to display the calendar
 function showCalendar(month, year) {
+	console.log(events)
 	let firstDay = new Date(year, month, 1).getDay();
 	tbl = document.getElementById("calendar-body");
 	tbl.innerHTML = "";
@@ -237,7 +275,7 @@ function createEventTooltip(date, month, year) {
 // Function to get events on a specific date
 function getEventsOnDate(date, month, year) {
 	return events.filter(function (event) {
-		let eventDate = new Date(event.date);
+		let eventDate = new Date(event.MeetingDate);
 		return (
 			eventDate.getDate() === date &&
 			eventDate.getMonth() === month &&
@@ -255,6 +293,3 @@ function hasEventOnDate(date, month, year) {
 function daysInMonth(iMonth, iYear) {
 	return 32 - new Date(iYear, iMonth, 32).getDate();
 }
-
-// Call the showCalendar function initially to display the calendar
-showCalendar(currentMonth, currentYear);
