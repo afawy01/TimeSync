@@ -62,9 +62,9 @@ function displayReminders() {
 			currentYear) {
 			let listItem = document.createElement("li");
 			listItem.innerHTML =
-				`<strong>${event.title}</strong> - 
-			${event.description} on 
-			${eventDate.toLocaleDateString()}`;
+				`<strong>${event.title}</strong> -
+			${event.description} on
+			${eventDate.toLocaleString()}`;
 
 			// Add a delete button for each reminder item
 			let deleteButton =
@@ -81,7 +81,7 @@ function displayReminders() {
 	}
 }
 
-// Function to generate a range of 
+// Function to generate a range of
 // years for the year select input
 function generate_year_range(start, end) {
 	let years = "";
@@ -224,9 +224,9 @@ function createEventTooltip(date, month, year) {
 	for (let i = 0; i < eventsOnDate.length; i++) {
 		let event = eventsOnDate[i];
 		let eventDate = new Date(event.date);
-		let eventText = `<strong>${event.title}</strong> - 
-			${event.description} on 
-			${eventDate.toLocaleDateString()}`;
+		let eventText = `<strong>${event.title}</strong> -
+			${event.description} on
+			${eventDate.toLocaleString()}`;
 		let eventElement = document.createElement("p");
 		eventElement.innerHTML = eventText;
 		tooltip.appendChild(eventElement);
