@@ -50,6 +50,44 @@
         .list-item:hover {
             background-color: #f9f9f9;
         }
+        
+        .form-popup {
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup {
+
+            font-family: Arial, sans-serif;
+            
+            position: absolute;
+            
+            top: 50%;
+            
+            left: 50%;
+            
+            transform: translate(-50%, -50%);
+            
+            background: #fff;
+            
+            padding: 20px;
+            
+            border-radius: 8px;
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            
+        }
     </style>
 </head>
 <body>
@@ -66,6 +104,17 @@
         </table>
     </div>
     <button>Disband Team</button>
+
+    <div class="form-popup" id="kickConfirmation">
+        <div class="popup" id="popup">
+            <span onclick="closeGroupJoinForm()"class="close" id="closePopup">&times;</span>
+            <div class="popup-content">
+                <p>Are you sure?</p>
+                <button onclick="confirmKick()">Yes</button>
+                <button onclick="closeKickConfirmation()">No</button>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="teamsettings.js"></script>
 </html>

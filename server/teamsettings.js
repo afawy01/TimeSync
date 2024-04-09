@@ -62,23 +62,17 @@ window.onload = async function() {
                 // If not referring to current user, add role buttons
                 if (team["Role"] == "Owner") {
                     // Admin exclusive actions
+                    let changeRoleButton = document.createElement("button")
+                    changeRoleButton.textContent = "Change Role"
+
                     let kickButton = document.createElement("button")
                     kickButton.textContent = "Kick"
                     kickButton.value = data["teammembers"][i]["UserID"]
                     kickButton.onclick = function() {
-                        fetch(`/api/remove-member`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ channelID: teamID, userID: kickButton.value})
-                        })
-                        .then(response => {
-                            if (response.status == 200) {
-                                window.location.reload()
-                            }
-                        })
+                        document.getElementById('kickConfirmation').style.display = 'block';
+                        document.getElementById('kickConfirmation').value = kickButton.value;
                     }
+                    actions.appendChild(changeRoleButton);
                     actions.appendChild(kickButton);
                 }
             }
@@ -91,4 +85,25 @@ window.onload = async function() {
 
         console.log(data)
     })
+}
+
+function confirmKick() {
+    const teamID = new URLSearchParams(window.location.search).get('id');
+    fetch(`/api/remove-member`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ channelID: teamID, userID: document.getElementById('kickConfirmation').value})
+    })
+    .then(response => {
+        if (response.status == 200) {
+            window.location.reload()
+        }
+    })
+}
+
+function closeKickConfirmation() {
+    document.getElementById('kickConfirmation').style.display = 'none';
+    document.getElementById('kickConfirmation').value = null;
 }
