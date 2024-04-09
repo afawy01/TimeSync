@@ -87,6 +87,10 @@ app.get('/team', (req, res) => {
   res.sendFile(path.join(__dirname, 'team.html'))
 })
 
+app.get('/teamsettings', (req, res) => {
+  res.sendFile(path.join(__dirname, 'teamsettings.html'))
+})
+
 app.get('/getteam', async (req, res) => {
   // TODO: Check user credentials if they are allowed to get this team's information
   const channelID = req.query.id
@@ -99,7 +103,20 @@ app.get('/getteam', async (req, res) => {
   sql = `SELECT * FROM UserTeams WHERE ChannelID = ?`
   const teamMembers = await queryAllDB(sql, [channelID])
 
-  res.send({ teaminfo: teamInfo, teammembers: teamMembers })
+  // Get all team member usernames
+  let info = ""
+  for(let i = 0; i < teamMembers.length; i++) {
+    info = info.concat(teamMembers[i]["UserID"])
+    if (i < teamMembers.length-1) {
+      info = info.concat(', ')
+    }
+  }
+
+  // TODO: Clean up JSON for teammembers and memberinfo being separate.
+  sql = `SELECT UserID, Username FROM Users WHERE UserID IN (${info})`
+  const memberInfo = await queryAllDB(sql)
+
+  res.send({ teaminfo: teamInfo, teammembers: teamMembers, memberinfo: memberInfo })
 })
 
 // ----------WIP Functions -------------------------
@@ -157,6 +174,24 @@ app.get('/api/chat-logs', (req, res) => {
       res.json(messages);
   });
 });
+
+app.post('/api/remove-member', (req, res) => {
+  const { channelID, userID } = req.body
+  const userId = req.session.userId;
+
+  if (!userId) return res.status(401).json({ error: 'User not authenticated' });
+
+  // TODO: Check role of userid to see if permitted to do this action
+
+  const sql = `DELETE FROM UserTeams WHERE UserID = ${userID} and ChannelID = ${channelID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message);
+    } else {
+      res.status(200).send("Successfully removed member");
+    }
+  })
+})
 // !--------------------------------------------------------------------
 //Add New Users
 app.post('/user', async (req, res) => {

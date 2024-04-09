@@ -10,6 +10,11 @@ window.onload = function() {
             return
         }
 
-        
+        console.log(data)
     })
+}
+
+function teamSettings(){
+    const channelID = new URLSearchParams(window.location.search).get('id');
+    window.location.href = `/teamsettings?id=${channelID}`
 }
