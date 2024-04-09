@@ -18,3 +18,14 @@ function teamSettings(){
     const channelID = new URLSearchParams(window.location.search).get('id');
     window.location.href = `/teamsettings?id=${channelID}`
 }
+
+$ = function(id) {
+  return document.getElementById(id);
+}
+
+var show = function(id) {
+	$(id).style.display ='block';
+}
+var hide = function(id) {
+	$(id).style.display ='none';
+}
