@@ -120,6 +120,23 @@ function confirmKick() {
     })
 }
 
+function confirmTeamDelete() {
+    const teamID = new URLSearchParams(window.location.search).get('id');
+
+    fetch('/api/delete-team', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ channelID: teamID })
+    })
+    .then(response => {
+        if (response.status == 200) {
+            window.location.href = '/teamlist'
+        }
+    })
+}
+
 function closeKickConfirmation() {
     document.getElementById('kickConfirmation').style.display = 'none';
     document.getElementById('kickConfirmation').value = null;

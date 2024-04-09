@@ -122,7 +122,7 @@
             </tr>
         </table>
     </div>
-    <button>Disband Team</button>
+    <button onclick="document.getElementById('deleteConfirmation').style.display = 'block'">Disband Team</button>
 
     <button class="button" href="#" onclick="show('copyCode')">Team Code</button>
 
@@ -154,6 +154,16 @@
                 <p>Are you sure?</p>
                 <button onclick="confirmRoleChange()">Yes</button>
                 <button onclick="closeRoleConfirmation()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-popup" id="deleteConfirmation">
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <p>Are you sure? <b>THIS CANNOT BE REVERSED!</b></p>
+                <button onclick="confirmTeamDelete()">Yes</button>
+                <button onclick="document.getElementById('deleteConfirmation').style.display = 'none'">No</button>
             </div>
         </div>
     </div>

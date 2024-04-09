@@ -280,6 +280,37 @@ app.post('/api/remove-user-meeting', (req, res) => {
     }
   })
 })
+
+app.post('/api/delete-team', (req, res) => {
+  const { channelID } = req.body
+
+  // TODO: Check role of user requesting for authentication
+  const userID = req.session.userId
+
+  let sql = `DELETE FROM TeamsChannels WHERE ChannelID = ${channelID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    }
+  })
+
+  sql = `DELETE FROM UserTeams WHERE ChannelID = ${channelID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    }
+  })
+
+  sql = `DELETE FROM Messages WHERE ChannelID = ${channelID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      res.status(200).send({ message: 'Successfully deleted team.' })
+    }
+  })
+})
+
 // !--------------------------------------------------------------------
 //Add New Users
 app.post('/user', async (req, res) => {
