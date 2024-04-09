@@ -52,19 +52,12 @@ function closeGroupJoinForm() {
 }
 
 function openGroupForm() {
+    document.getElementById('groupSubmitButton').style.display = 'block'
     document.getElementById("groupForm").style.display = "block";
 }
 
 function closeGroupForm() {
     document.getElementById("groupForm").style.display = "none";
-}
-
-function openMeetingForm() {
-    document.getElementById("meetingForm").style.display = "block";
-}
-
-function closeMeetingForm() {
-    document.getElementById("meetingForm").style.display = "none";
 }
 
 function submitGroupForm() {
@@ -80,36 +73,20 @@ function submitGroupForm() {
     })
     .then(response => response.json())
     .then (data => {
-        console.log(data);
-        //alert('Created group "' + groupName + '"')
-        closeGroupForm()
+        console.log(data)
+        const successText = document.createElement('p')
+        successText.textContent = "Successfully created team!"
+        const teamCodeText = document.createElement('p')
+        teamCodeText.textContent = `Team Join Code: ${data.joincode}`
+        const popup = document.getElementById('teamCreationPopup')
+        popup.appendChild(successText)
+        popup.appendChild(teamCodeText)
+        document.getElementById('groupSubmitButton').style.display = 'none'
+        //closeGroupForm()
     })
     .catch(error => {
         console.error('Error: ', error);
     })
-}
-
-function submitMeetingForm() {
-    const meetingName = document.getElementById('meetingTimeInput').value;
-    const meetingDescription = document.getElementById('meetingDescriptionInput').value;
-    const meetingDate = document.getElementById('meetingDateInput').value;
-    const meetingTime = document.getElementById('meetingTimeInput').value;
-    /*fetch('/meeting', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: meetingName, description: meetingDescription }),
-    })
-    .then(response => response.json())
-    .then (data => {
-        console.log(data);
-        alert('Created group "' + groupName + '"')
-        closeGroupCreationForm()
-    })
-    .catch(error => {
-        console.error('Error: ', error);
-    })*/
 }
 
 function joinGroup() {
@@ -154,7 +131,6 @@ window.onload = function() {
         const teamListButton = document.getElementById("teamListButton");
         const loginButton = document.getElementById("loginButton");
         const logoutButton = document.getElementById("logoutButton");
-        const meetingButton = document.getElementById("meetingButton");
         const groupButton = document.getElementById("groupButton");
         const joinGroupButton = document.getElementById("joinGroupButton");
         const calendarButton = document.getElementById("calendarButton");

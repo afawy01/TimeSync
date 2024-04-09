@@ -363,7 +363,6 @@ app.post('/meeting', (req, res) => {
 app.post('/group', (req, res) => {
     let joincode = crypto.randomBytes(4).toString('base64');
     console.log(joincode);
-    console.log(req.body)
     const { title, description, icon } = req.body;
     let sql = `INSERT INTO TeamsChannels (ChannelName, Description, JoinCode) VALUES (?, ?, ?)`;
     db.run(sql, [title, description, joincode], function(err) {
@@ -376,7 +375,7 @@ app.post('/group', (req, res) => {
           return console.error(err.message);
         }
       })
-      res.send({ message: 'Group added', id: this.lastID });
+      res.send({ message: 'Successfully created team', id: this.lastID, joincode: joincode });
     })
   });
 

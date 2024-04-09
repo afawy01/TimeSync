@@ -33,7 +33,7 @@
 
         <span onclick="closeGroupForm()"class="close" id="closePopup">&times;</span>
 
-        <div class="popup-content">
+        <div id="teamCreationPopup" class="popup-content">
 
             <p>Team Creation</p>
 
@@ -41,12 +41,7 @@
             <input type="text" placeholder="Team Description" id="groupDescriptionInput"><br>
             <label for="teamIconInput">Team Icon</label>
             <input type="file" id="teamIconInput" accept="image/*"><br>
-            <p>Enable Team Ranks?</p>
-            <input type="radio" id="yes" name="enable_team_ranks" value="yes">
-            <label for="yes">Yes</label>
-            <input type="radio" id="no" name="enable_team_ranks" value="no">
-            <label for="no">No</label><br><br>
-            <button onclick="submitGroupForm()">Create Team</button>
+            <button onclick="submitGroupForm()" id="groupSubmitButton">Create Team</button>
 
         </div>
     </div>
