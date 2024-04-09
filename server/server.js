@@ -93,6 +93,10 @@ app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'profile.html'))
 })
 
+app.get('/availability', (req, res) => {
+  res.sendFile(path.join(__dirname, 'availability.html'))
+})
+
 app.get('/getteam', async (req, res) => {
   // TODO: Check user credentials if they are allowed to get this team's information
   const channelID = req.query.id

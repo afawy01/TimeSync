@@ -14,11 +14,6 @@ window.onload = function() {
     })
 }
 
-function teamSettings(){
-    const channelID = new URLSearchParams(window.location.search).get('id');
-    window.location.href = `/teamsettings?id=${channelID}`
-}
-
 $ = function(id) {
   return document.getElementById(id);
 }

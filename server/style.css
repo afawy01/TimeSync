@@ -55,11 +55,6 @@ body {
     background-position: center;
     border: none; 
     margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.meeting-room:hover {
-  
 }
 
 .clickable {

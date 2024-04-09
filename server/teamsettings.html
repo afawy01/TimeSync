@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            text-align: center;
         }
         
         .list {
@@ -88,9 +89,27 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             
         }
+
+        .tab {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .tab:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
+    <div>
+        <button class="tab">Chat</button>
+        <button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
+        <button class="tab">Calendar</button>
+        <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
+    </div>
     <div class="list">
         <div class="list-header">
             <h2>Members</h2>

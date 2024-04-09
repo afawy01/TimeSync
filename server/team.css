@@ -43,6 +43,18 @@ body {
   text-align: center;
 }
 
+.tab {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background-color: #ddd;
+}
+
 /*button {
     margin-top: 50px;
     background-color: rgba(255,255,255,0.3);

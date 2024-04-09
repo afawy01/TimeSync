@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="team.css">
-<button>Chat</button>
-<button onclick="location.href='availability.html'">Availability</button>
-<button>Calendar</button>
-<button onclick="teamSettings()">Settings</button>
+<button class="tab">Chat</button>
+<button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
+<button class="tab">Calendar</button>
+<button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
 
 <script src="team.js"></script>
 </html>
