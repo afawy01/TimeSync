@@ -62,24 +62,32 @@ window.onload = async function() {
                 // If not referring to current user, add role buttons
                 if (team["Role"] == "Owner") {
                     // Admin exclusive actions
-                    let kickButton = document.createElement("button")
-                    kickButton.textContent = "Kick"
-                    kickButton.value = data["teammembers"][i]["UserID"]
-                    kickButton.onclick = function() {
-                        fetch(`/api/remove-member`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ channelID: teamID, userID: kickButton.value})
-                        })
-                        .then(response => {
-                            if (response.status == 200) {
-                                window.location.reload()
-                            }
-                        })
+                    let changeRoleButton = document.createElement("button")
+                    if (data["teammembers"][i]["Role"] == "Member") {
+                        changeRoleButton.textContent = "Promote to Admin"
+                        changeRoleButton.value = `${data["teammembers"][i]["UserID"]},Admin`
+                    } else {
+                        changeRoleButton.textContent = "Demote to Member"
+                        changeRoleButton.value = `${data["teammembers"][i]["UserID"]},Member`
                     }
-                    actions.appendChild(kickButton);
+                    changeRoleButton.onclick = function() {
+                        document.getElementById('roleConfirmation').style.display = 'block';
+                        document.getElementById('roleConfirmation').value = changeRoleButton.value;
+                    }
+                    actions.appendChild(changeRoleButton);
+                }
+                if (team["Role"] == "Owner" || team["Role"] == "Admin") {
+                    // If user is owner, can't kick
+                    if (data["teammembers"][i]["Role"] != "Owner") {
+                        let kickButton = document.createElement("button")
+                        kickButton.textContent = "Kick"
+                        kickButton.value = data["teammembers"][i]["UserID"]
+                        kickButton.onclick = function() {
+                            document.getElementById('kickConfirmation').style.display = 'block';
+                            document.getElementById('kickConfirmation').value = kickButton.value;
+                        }
+                        actions.appendChild(kickButton);
+                    }
                 }
             }
             role.textContent = data["teammembers"][i]["Role"]
@@ -91,4 +99,47 @@ window.onload = async function() {
 
         console.log(data)
     })
+}
+
+function confirmKick() {
+    const teamID = new URLSearchParams(window.location.search).get('id');
+    fetch(`/api/remove-member`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ channelID: teamID, userID: document.getElementById('kickConfirmation').value})
+    })
+    .then(response => {
+        if (response.status == 200) {
+            window.location.reload()
+        }
+    })
+}
+
+function closeKickConfirmation() {
+    document.getElementById('kickConfirmation').style.display = 'none';
+    document.getElementById('kickConfirmation').value = null;
+}
+
+function confirmRoleChange() {
+    const teamID = new URLSearchParams(window.location.search).get('id');
+    const valueSplit = document.getElementById('roleConfirmation').value.split(',')
+    fetch(`/api/change-member-role`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ channelID: teamID, userID: valueSplit[0], role: valueSplit[1] })
+    })
+    .then(response => {
+        if (response.status == 200) {
+            window.location.reload()
+        }
+    })
+}
+
+function closeRoleConfirmation() {
+    document.getElementById('roleConfirmation').style.display = 'none';
+    document.getElementById('roleConfirmation').value = null;
 }
