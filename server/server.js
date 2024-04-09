@@ -89,6 +89,10 @@ app.get('/teamsettings', (req, res) => {
   res.sendFile(path.join(__dirname, 'teamsettings.html'))
 })
 
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'profile.html'))
+})
+
 app.get('/getteam', async (req, res) => {
   // TODO: Check user credentials if they are allowed to get this team's information
   const channelID = req.query.id
@@ -183,6 +187,34 @@ app.get('/api/get-user-meetings', (req, res) => {
     }
     res.json(meetings);
   })
+})
+
+app.post('/api/change-profile', (req, res) => {
+  const { username, password, email } = req.body
+  const userID = req.session.userId
+
+  if (username) {
+    const sql = `UPDATE Users SET Username = '${username}' WHERE UserID = ${userID}`
+    db.run(sql, (err) => {
+      if(err) { console.error(err.message) }
+    })
+  }
+
+  if (password) {
+    const sql = `UPDATE Users SET Password = '${password}' WHERE UserID = ${userID}`
+    db.run(sql, (err) => {
+      if(err) { console.error(err.message) }
+    })
+  }
+
+  if (email) {
+    const sql = `UPDATE Users SET Email = '${email}' WHERE UserID = ${userID}`
+    db.run(sql, (err) => {
+      if(err) { console.error(err.message) }
+    })
+  }
+
+  res.status(200).send({ message: 'Successfully changed profile' })
 })
 
 app.post('/api/remove-member', (req, res) => {
