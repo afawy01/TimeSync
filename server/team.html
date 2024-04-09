@@ -6,5 +6,18 @@
 <button class="tab">Calendar</button>
 <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
 
+<div class="chatroom">
+    <div class="chatroom-header">
+        <h2>Chatroom</h2>
+    </div>
+    <ul class="chat-messages">
+        <!-- Chat messages will show up with teams.js -->
+    </ul>
+    <div class="message-input">
+        <input type="text" id="message-content" placeholder="Type a message..." />
+        <button id="send-message">Send</button>
+    </div>
+</div>
+
 <script src="team.js"></script>
 </html>
