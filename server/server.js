@@ -5,14 +5,13 @@ const crypto = require('crypto');
 const session = require('express-session');
 const sqliteStore = require('connect-sqlite3')(session);
 const path = require('path');
+const fs = require('fs');
 
-const db = new sqlite3.Database('./TimeSync.db', sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-        console.error(err.message);
-    }
-    //db.run('CREATE TABLE IF NOT EXISTS "UserMeetings" ( "MeetingID" INTEGER, "UserID" INTEGER, "Title" TEXT, "Description" TEXT, MeetingDate DATETIME, PRIMARY KEY("MeetingID" AUTOINCREMENT));');
-    console.log('Connected to the TimeSync SQLite database.');
-});
+const db = new sqlite3.Database('./TimeSync.db', (err) => {
+  // Initialize DB if not existing
+  db.exec(fs.readFileSync('./TimeSync.sql').toString())
+  console.log('Connected to the TimeSync SQLite database.');
+})
 
 // Query db and await results before continuing
 function queryAllDB(query, params) {

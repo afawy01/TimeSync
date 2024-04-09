@@ -1,0 +1,90 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Users" (
+	"UserID"	INTEGER,
+	"Username"	TEXT NOT NULL,
+	"Password"	TEXT NOT NULL,
+	"Email"	TEXT NOT NULL,
+	"Role"	TEXT NOT NULL,
+	PRIMARY KEY("UserID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "TeamsChannels" (
+	"ChannelID"	INTEGER,
+	"ChannelName"	TEXT NOT NULL,
+	"Description"	TEXT,
+	"JoinCode" TEXT,
+	PRIMARY KEY("ChannelID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Channels" (
+	"ChannelID"	INTEGER,
+	"ChannelName"	TEXT NOT NULL,
+	"Description"	TEXT,
+	PRIMARY KEY("ChannelID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Messages" (
+	"MessageID"	INTEGER,
+	"ChannelID"	INTEGER,
+	"UserID"	INTEGER,
+	"MessageText"	TEXT NOT NULL,
+	"Timestamp"	DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
+	FOREIGN KEY("ChannelID") REFERENCES "Channels"("ChannelID"),
+	PRIMARY KEY("MessageID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Tasks" (
+	"TaskID"	INTEGER,
+	"TaskName"	TEXT NOT NULL,
+	"Description"	TEXT,
+	"Status"	TEXT NOT NULL,
+	"Deadline"	DATETIME,
+	"AssignedTo"	INTEGER,
+	FOREIGN KEY("AssignedTo") REFERENCES "Users"("UserID"),
+	PRIMARY KEY("TaskID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Events" (
+	"EventID"	INTEGER,
+	"Title"	TEXT NOT NULL,
+	"Description"	TEXT,
+	"StartDate"	DATETIME NOT NULL,
+	"EndDate"	DATETIME NOT NULL,
+	"UserID"	INTEGER,
+	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
+	PRIMARY KEY("EventID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "SupportTickets" (
+	"TicketID"	INTEGER,
+	"UserID"	INTEGER,
+	"Query"	TEXT NOT NULL,
+	"Response"	TEXT,
+	"Status"	TEXT NOT NULL,
+	"CreatedAt"	DATETIME DEFAULT CURRENT_TIMESTAMP,
+	"UpdatedAt"	DATETIME,
+	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
+	PRIMARY KEY("TicketID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Meetings" (
+	"MeetingID"	INTEGER,
+	"Title"	TEXT NOT NULL,
+	"Description"	TEXT,
+	"MeetingDate"	DATETIME NOT NULL,
+	"UserID"	INTEGER NOT NULL,
+	"ChannelID"	INTEGER NOT NULL,
+	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
+	FOREIGN KEY("ChannelID") REFERENCES "Channels"("ChannelID"),
+	PRIMARY KEY("MeetingID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "UserMeetings" (
+	"MeetingID" INTEGER,
+	"UserID" INTEGER,
+	"Title" TEXT,
+	"Description" TEXT,
+	"MeetingDate" DATETIME, 
+	PRIMARY KEY("MeetingID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "UserTeams" (
+	"EntryID" INTEGER,
+	"UserID" INTEGER,
+	"ChannelID" INTEGER,
+	"Role" TEXT,
+	PRIMARY KEY("EntryID" AUTOINCREMENT)
+);
+COMMIT;
