@@ -1,19 +1,20 @@
+<!--color: #5a6cbf-->
 <!DOCTYPE html>
 <html>
 <title>Availability</title>
 <style>
-    .popup {
+.popup {
   display: none;
   position: fixed;
   padding: 10px;
   width: 300px;
   left: 50%;
   margin-left: -150px;
-  height: 300px;
+  height: 300px auto;
   top: 50%;
   margin-top: -100px;
   background: #FFF;
-  border: 3px solid #5a6cbf;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 20;
 }
 
@@ -58,11 +59,57 @@ body {
 .tab:hover {
     background-color: #ddd;
 }
+
+
+.poll {
+    width: 400px;
+    padding: 1.5rem;
+    margin: auto;
+    margin-top:20px;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.poll__title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.poll__option:hover {
+    cursor: pointer;
+}
+
+.poll__option:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+.poll__option--selected .poll__option-fill {
+    background: #009578;
+}
+
+.poll__option--selected .poll__option-info {
+    font-weight: bold;
+}
+
+.poll__option-fill {
+    width: 50%;
+    height: 10px;
+    background: #dddddd;
+}
+
+.poll__option-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+}
 </style>
 
 <div>
   <button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`">Chat</button>
-  <button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
+  <button class="tab" onclick="location.href='availability.html'">Availability</button>
   <button class="tab">Calendar</button>
   <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
 </div>
@@ -71,14 +118,18 @@ body {
 
 <div class="popup" id="popup">
     <span style="padding-left:275px;" onclick="hide('popup')">&times;</span>
-
         Enter date and time options:
-        <input type="datetime-local" class="option"></input>
-        <button href="#" onclick="addDate()" id="addDate">Add</button>
+        <input type="datetime-local" id=addDate class="option" style="margin-top:10px;">
+        <button href="#" onclick="addDate()" id=addButton>Add</button>
         <ul class="showDates"></ul>
-        <button href="#" style="margin-top:20px;" onclick="createPoll()">Create Poll</button>
-
+        <button href="#" onclick="createPoll()">Create Poll</button>
 </div>
+
+<body>
+    <div class="poll">
+
+    </div>
+</body>
 
 <script src="availability.js"></script>
 </html>
