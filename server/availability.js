@@ -50,17 +50,21 @@ function createPoll() {
         },
         body: JSON.stringify({ title: document.getElementById('pollTitle').value, description: document.getElementById('pollDescription').value, dates: dates, channelID: new URLSearchParams(window.location.search).get('id'), type: type })
     })
+    .then(response => response.json())
+    location.reload()
 }
 
 async function displayPolls(data) {
     // Fetch userid to check if voted already
     let userID;
+    let teamlist;
     await fetch(`/user`, {
         method: 'GET'
     })
     .then(response => response.json())
     .then(data => {
         userID = data.userid
+        teamlist = data.teamlist
     })
 
     for (let i = 0; i < data.polls.length; i++) {
@@ -181,6 +185,26 @@ async function displayPolls(data) {
             }
             
             dateTableRow.appendChild(voteButton)
+        }
+
+        const role = teamlist.find((member) => member.UserID == userID)
+        if (role.Role == "Owner" || role.Role == "Admin") {
+            const deleteRow = document.createElement('tr')
+            let deleteButton = document.createElement('button')
+            deleteButton.value = data.polls[i].PollID
+            deleteButton.textContent = "Delete Poll"
+            deleteButton.onclick = function() {
+                fetch('/api/remove-poll', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: deleteButton.value })
+                })
+                location.reload()
+            }
+            deleteRow.appendChild(document.createElement('td').appendChild(deleteButton))
+            dateTable.appendChild(deleteRow)
         }
 
         document.getElementById("polls").appendChild(poll)

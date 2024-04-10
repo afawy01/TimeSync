@@ -566,6 +566,19 @@ app.post('/api/vote-poll', (req, res) => {
   res.status(200).send({ message: 'Successfully casted vote'})
 })
 
+app.post('/api/remove-poll', (req, res) => {
+  const { channelID, pollID } = req.body
+  const userID = req.session.userId
+
+  const sql = `DELETE FROM Polls WHERE ChannelID = ${channelID} AND PollID = ${pollID}`
+  db.run(sql, (err) => {
+    if (err) { console.error(err.message) } else {
+      res.status(200).send({ message: 'Successfully removed poll' })
+    }
+  })
+
+})
+
 app.post('/api/remove-vote', (req, res) => {
   const { channelID, pollID, date, type } = req.body
   const userId = req.session.userId
