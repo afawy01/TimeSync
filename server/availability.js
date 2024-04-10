@@ -51,7 +51,16 @@ function createPoll() {
     })
 }
 
-function displayPolls(data) {
+async function displayPolls(data) {
+    // Fetch userid to check if voted already
+    let userID;
+    await fetch(`/user`, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        userID = data.userid
+    })
 
     for (let i = 0; i < data.polls.length; i++) {
         let poll = document.createElement('div')
@@ -59,6 +68,7 @@ function displayPolls(data) {
 
         let titleRow = document.createElement('tr')
         dateTable.appendChild(titleRow)
+        // Title of availability poll
         let titleText = document.createElement('td')
         titleText.colSpan = 3
         titleText.style.fontSize = "35px"
@@ -68,18 +78,47 @@ function displayPolls(data) {
 
         let dateItems = data.dates.filter((date) => data.polls[i].PollID == date.PollID)
         for (let j = 0; j < dateItems.length; j++) {
+            // Create row for listing date and button for voting on date
             let dateTableRow = document.createElement('tr')
             let dateItem = document.createElement('td')
-            console.log(dateItems[j].Date)
             dateItem.textContent = dateItems[j].Date
             dateTableRow.appendChild(dateItem)
             dateTable.appendChild(dateTableRow)
 
+
+            // Check if current date has already been voted on by user
+            let hasVoted = data.votes.find((vote) => dateItems[j].PollID == vote.PollID && dateItems[j].Date == vote.Date && userID == vote.UserID)
+            console.log(hasVoted)
+
             let voteButton = document.createElement('button')
-            voteButton.onclick = function() {
-    
+            voteButton.value = data.polls[i].PollID
+            // If not voted, display vote button
+            if (!hasVoted) {
+                voteButton.onclick = function() {
+                    fetch('/api/vote-poll', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date })
+                    })
+                    location.reload()
+                }
+                voteButton.textContent = "Vote"
+            } else {
+                voteButton.onclick = function() {
+                    fetch('/api/remove-vote', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date })
+                    })
+                    location.reload()
+                }
+                voteButton.textContent = "Remove Vote"
             }
-            voteButton.textContent = "Vote"
+            
             dateTableRow.appendChild(voteButton)
         }
 

@@ -56,7 +56,7 @@ app.get('/user', async (req, res) => {
     console.log(info);
     sql = `SELECT * FROM TeamsChannels WHERE ChannelID IN (${info})`;
     const teaminfo = await queryAllDB(sql)
-    res.json({username : req.session.username, teamlist: teamlist, teaminfo: teaminfo});
+    res.json({username : req.session.username, teamlist: teamlist, teaminfo: teaminfo, userid: req.session.userId});
   } else {
     res.json({error: 'User not logged in'})
   }
@@ -206,7 +206,7 @@ app.get('/api/get-polls', async (req, res) => {
   sql = `SELECT * FROM AvailabilityVotes WHERE ChannelID = ${channelID}`
   const voteResults = await queryAllDB(sql)
 
-  res.send({ polls: pollResults, dates: dateResults, vote: voteResults })
+  res.send({ polls: pollResults, dates: dateResults, votes: voteResults })
 })
 
 app.post('/api/change-profile', (req, res) => {
@@ -479,8 +479,29 @@ app.post('/api/create-poll', (req, res) => {
 })
 
 app.post('/api/vote-poll', (req, res) => {
-  const { pollID } = req.body
+  const { channelID, pollID, date } = req.body
   const userID = req.session.userId
+
+  let sql = `INSERT INTO AvailabilityVotes (PollID, UserID, ChannelID, Date) VALUES (?, ?, ?, ?)`
+  db.run(sql, [pollID, userID, channelID, date], function(err) {
+    if(err) { return console.error(err.message) }
+  })
+
+  res.status(200).send({ message: 'Successfully casted vote'})
+})
+
+app.post('/api/remove-vote', (req, res) => {
+  const { channelID, pollID, date } = req.body
+  console.log(req.body)
+  const userId = req.session.userId
+  console.log(userId)
+
+  let sql = `DELETE FROM AvailabilityVotes WHERE ChannelID = ${channelID} AND PollID = ${pollID} AND Date = "${date}" AND UserID = ${userId}`
+  db.run(sql, (err) => {
+    if(err) { console.error(err.message) } else {
+      res.status(200).send({ message: 'Successfully removed vote' })
+    }
+  })
 })
 
 //Polling stuff
