@@ -14,19 +14,19 @@
     <!-- Welcome user by name via .js -->
     <h1 id="welcomeText" style="text-align: center;"></h1>
     <div class="tabs">
-        <div id="teamListButton" class="tab" onclick="location.href='teamlist'">Team List</div>
-        <div id="groupButton" class="tab" onclick="openGroupForm()">Create Team</div>
-        <div id="joinGroupButton" class="tab" onclick="openGroupJoinForm()">Join Team</div>
-        <div id="loginButton" class="tab" onclick="location.href='login'">Login</div>
+        <div id="teamListButton" class="tab" onclick="location.href='teamlist'"><b>Team List</b></div>
+        <div id="groupButton" class="tab" onclick="openGroupForm()"><b>Create Team</b></div>
+        <div id="joinGroupButton" class="tab" onclick="openGroupJoinForm()"><b>Join Team</b></div>
+        <div id="loginButton" class="tab" onclick="location.href='login'"><b>Login</b></div>
     </div>
     <div class="tabs">
-        <div id="calendarButton" class="tab" onclick="location.href='calendar.html'">Personal Calendar</div>
-        <div id="profileButton" class="tab" onclick="location.href='/profile'">Profile</div>
+        <div id="calendarButton" class="tab" onclick="location.href='calendar.html'"><b>Personal Calendar</b></div>
+        <div id="profileButton" class="tab" onclick="location.href='/profile'"><b>Profile</b></div>
     </div>
     <div class="meeting-room"></div>
     <div class="tabs">
-        <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
-        <div id="logoutButton" class="tab" onclick="logout()">Logout</div>
+        <button class="customer-service" onclick="location.href='customer-service.html'"><b>Customer Service</b></button>
+        <div id="logoutButton" class="tab" onclick="logout()"><b>Logout</b></div>
     </div>
 </div>
 
@@ -37,11 +37,15 @@
 
         <div id="teamCreationPopup" class="popup-content">
 
-            <p>Team Creation</p>
+            <p style="color: #5a6cbf; font-size:20px;"><b>Team Creation</b></p>
 
-            <input type="text" placeholder="Team Name" id="groupNameInput"><br>
-            <input type="text" placeholder="Team Description" id="groupDescriptionInput"><br>
-            <label for="teamIconInput">Team Icon</label>
+            <input type="text" placeholder="Team Name" id="groupNameInput" class=inputs><br>
+            <input type="text" placeholder="Team Description" id="groupDescriptionInput" class=inputs><br>
+            <label for="teamIconInput" id=teamIcon><b>Team Icon:</b></label><br>
+
+            <label for=teamIconInput class=uploadButton>
+                Choose File
+            </label>
             <input type="file" id="teamIconInput" accept="image/*"><br>
             <button onclick="submitGroupForm()" id="groupSubmitButton">Create Team</button>
 
@@ -56,9 +60,9 @@
 
         <div class="popup-content">
 
-            <p>Join Team</p>
+            <p style="color: #5a6cbf; font-size:20px;"><b>Join Team</b></p>
 
-            <input type="text" placeholder="Team Code" id="groupCodeInput"><br>
+            <input type="text" placeholder="Team Code" id="groupCodeInput" class=inputs><br>
             <button onclick="joinGroup()">Join Team</button>
 
         </div>
@@ -72,12 +76,12 @@
 
         <div class="popup-content">
 
-            <p>Meeting Creation</p>
+            <p style="color: #5a6cbf; font-size:20px;"><b>Meeting Creation</b></p>
 
-            <input type="text" placeholder="Meeting Name" id="meetingNameInput"><br>
-            <input type="text" placeholder="Meeting Description" id="meetingDescriptionInput"><br>
-            <input type="date" placeholder="Date" id="meetingDateInput"><br>
-            <input type="time" placeholder="Time" id="meetingTimeInput"><br>
+            <input type="text" placeholder="Meeting Name" id="meetingNameInput" class=inputs><br>
+            <input type="text" placeholder="Meeting Description" id="meetingDescriptionInput" class=inputs><br>
+            <input type="date" placeholder="Date" id="meetingDateInput" class=inputs><br>
+            <input type="time" placeholder="Time" id="meetingTimeInput" class=inputs><br>
             <button onclick="submitMeetingForm()">Create Meeting</button>
 
         </div>
