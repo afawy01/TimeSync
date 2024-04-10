@@ -75,6 +75,7 @@ document.getElementById('send-message').addEventListener('click', () => {
         .then(data => {
             console.log(data.success);
             document.getElementById('message-content').value = '';
+            location.reload()
         })
         .catch(error => console.error('Error sending message:', error));
     }
