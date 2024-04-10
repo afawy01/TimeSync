@@ -75,13 +75,20 @@ async function displayPolls(data) {
         titleText.textContent = data.polls[i].Title
         titleRow.appendChild(titleText)
 
+        let descriptionRow = document.createElement('tr')
+        dateTable.append(descriptionRow)
+        let descriptionText = document.createElement('td')
+        descriptionText.colSpan = 3
+        descriptionText.textContent = data.polls[i].Description
+        descriptionRow.appendChild(descriptionText)
+
 
         let dateItems = data.dates.filter((date) => data.polls[i].PollID == date.PollID)
         for (let j = 0; j < dateItems.length; j++) {
             // Create row for listing date and button for voting on date
             let dateTableRow = document.createElement('tr')
             let dateItem = document.createElement('td')
-            dateItem.textContent = dateItems[j].Date
+            dateItem.textContent = new Date(dateItems[j].Date).toLocaleString()
             dateTableRow.appendChild(dateItem)
             dateTable.appendChild(dateTableRow)
 
