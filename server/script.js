@@ -1,26 +1,3 @@
-/*document.getElementById('userForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-
-    fetch('/user', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('User added:', data);
-        alert('User added successfully!');
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-});*/
-
-//const { log } = require("npmlog");
-
 document.getElementById('meetingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
@@ -128,6 +105,8 @@ window.onload = function() {
     })
     .then(response => response.json())
     .then(data => {
+        document.getElementById("welcomeText").textContent = `Welcome ${data.username}!`
+
         const teamListButton = document.getElementById("teamListButton");
         const loginButton = document.getElementById("loginButton");
         const logoutButton = document.getElementById("logoutButton");

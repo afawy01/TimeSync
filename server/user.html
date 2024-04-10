@@ -9,8 +9,10 @@
 <body>
 <div class="container">
     <div class="header">
-        <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
     </div>
+    <img src="timesync_logo.png" width="10%" height="10%" style="margin-left: auto; margin-right: auto; display: block;">
+    <!-- Welcome user by name via .js -->
+    <h1 id="welcomeText" style="text-align: center;"></h1>
     <div class="tabs">
         <div id="teamListButton" class="tab" onclick="location.href='teamlist'">Team List</div>
         <div id="groupButton" class="tab" onclick="openGroupForm()">Create Team</div>
@@ -23,9 +25,9 @@
     </div>
     <div class="meeting-room"></div>
     <div class="tabs">
+        <button class="customer-service" onclick="location.href='customer-service.html'">Customer Service</button>
         <div id="logoutButton" class="tab" onclick="logout()">Logout</div>
     </div>
-    <!--<div class="clickable" onclick="location.href='meeting.html'">Click here to enter the meeting room</div>-->
 </div>
 
 <div class="form-popup" id="groupForm">

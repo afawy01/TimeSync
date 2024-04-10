@@ -114,7 +114,7 @@ body {
   <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
 </div>
 <br />
-<button class="button" href="#" onclick="show('popup')">Create Availability Poll</button>
+<button class="button" href="#" onclick="show('popup')">Create Poll</button>
 
 <div class="popup" id="popup">
     <span style="padding-left:275px;" onclick="hide('popup')">&times;</span>
@@ -146,7 +146,7 @@ body {
         <div class="list-header">
             <h2>Polls</h2>
         </div>
-        <table id="dateTable" class="dates-table">
+        <table id="dateTable" class="dates-table"">
         </table>
     </div>
 </body>
