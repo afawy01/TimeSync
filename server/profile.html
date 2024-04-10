@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <title>Profile</title>
+<style>
+.inputs {
+
+}
+</style>
 <button onclick="location.href='/'">Back</button>
 <div style="margin:15px;">
     <div style="padding-bottom:10px;">
@@ -12,12 +17,15 @@
                id=img accept="image/*">
     </div>
     <input type=text
+           class=inputs
            id=updateUser
            placeholder="Update Username">
     <input type=text
+           class=inputs
            id=updatePass
            placeholder="Update Password">
     <input type=text
+           class=inputs
            id=updateEmail
            placeholder="Update Email">
     <button onclick="updateProfile()">Update Profile</button>

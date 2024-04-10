@@ -2,12 +2,16 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    color: #5a6cbf;
+    background-color: #5a6cbf;
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
+    background-color:white;
+    border-radius: 25px;
 }
 
 .header {
@@ -18,12 +22,15 @@ body {
 }
 
 .customer-service {
-    padding: 10px 20px;
+    padding-bottom: 3px;
+    height: 38px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 5px
     cursor: pointer;
+    font-size:15px;
+    margin:0px;
 }
 
 .customer-service:hover {
@@ -45,7 +52,8 @@ body {
 }
 
 .tab:hover {
-    background-color: #ddd;
+    background-color: #5a6cbf;
+    color: white;
 }
 
 .meeting-room {
@@ -107,4 +115,56 @@ body {
     
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     
+}
+
+.inputs {
+    width: 325px;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #5a6cbf;
+    background: #5a6cbf;
+    color: white;
+}
+
+::placeholder {
+    color: white;
+    padding:5px;
+}
+
+#teamIcon {
+
+}
+
+.close {
+    color: #5a6cbf;
+}
+
+button {
+    height:30px;
+    width: auto;
+    padding: 0px 10px;
+    border:2px solid #5a6cbf;
+    margin-top:15px;
+    color: #5a6cbf;
+    background: white;
+    border-radius: 5px;
+}
+
+input[type="file"] {
+    display: none;
+}
+.uploadButton {
+    border: 2px solid #5a6cbf;
+    height: 15px;
+    width: auto;
+    display:inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#logoutButton {
+    height: 20px;
 }
