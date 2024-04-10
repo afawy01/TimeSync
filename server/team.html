@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="team.css">
-<button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`">Chat</button>
-<button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
-<button class="tab" onclick="window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`">Calendar</button>
-<button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
+<button class=tab onclick="location.href='teamlist.html'"><b>Teams</b></button>
+<button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Chat</b></button>
+<button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Availability</b></button>
+<button class="tab" onclick="window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Calendar</b></button>
+<button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Settings</b></button>
 
 <div class="chatroom">
     <div class="chatroom-header">
@@ -14,7 +15,7 @@
 
     </div>
     <div class="message-input">
-        <input type="text" id="message-content" placeholder="Type a message..." />
+        <input type="text" id="message-content" class=inputs placeholder="Type a message..." />
         <button id="send-message">Send</button>
     </div>
 </div>

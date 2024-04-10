@@ -43,23 +43,25 @@
 /* Styling buttons & webpage */
 
 body {
-  background: offwhite;
+  background: #5a6cbf;
   font-family: Arial, sans-serif;
   text-align: center;
+  color: #5a6cbf;
 }
 
 .tab {
-    margin: 0 10px;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    cursor: pointer;
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #5a6cbf;
+  border: 3px solid white;
 }
 
 .tab:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
-
 
 .poll {
     width: 400px;
@@ -69,6 +71,7 @@ body {
     font-family: sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
+    background: white;
 }
 
 .poll__title {
@@ -105,19 +108,49 @@ body {
     padding: 0.5rem 0;
     font-size: 0.85rem;
 }
+
+.pollButton {
+    height:30px;
+    width: auto;
+    padding: 0px 10px;
+    border:2px solid #5a6cbf;
+    margin-top:15px;
+    color: #5a6cbf;
+    background: white;
+    border-radius: 5px;
+}
+
+
+
+.pollButton:hover {
+    background: #5a6cbf;
+    color: white;
+}
+
+.container{
+    background: white;
+    border-radius: 25px;
+    width: 700px;
+    padding-bottom: 30px;
+    margin:auto;
+}
+
 </style>
 
 <div>
-  <button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`">Chat</button>
-  <button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
-  <button class="tab" onclick="window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`">Calendar</button>
-  <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
+    <button class=tab onclick="location.href='teamlist.html'"><b>Teams</b></button>
+    <button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Chat</b></button>
+    <button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Availability</b></button>
+    <button class="tab" onclick="window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Calendar</b></button>
+    <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Settings</b></button>
 </div>
 <br />
-<button class="button" href="#" onclick="show('popup')">Create Poll</button>
+<div class=container>
+    <button class="pollButton" href="#" onclick="show('popup')">Create Poll</button>
 
-<div class="popup" id="popup">
-    <span style="padding-left:275px;" onclick="hide('popup')">&times;</span>
+    <div class="popup" id="popup">
+        <b>
+        <span style="padding-left:275px;" onclick="hide('popup')">&times;</span>
         Title:
         <br />
         <input type="text" id="pollTitle">
@@ -127,10 +160,11 @@ body {
         <input type="text" id="pollDescription">
         <br />
         Poll Type:
-        <input value="availability" name="poll-type" type="radio" id="availabilityRadio" onclick="document.getElementById('availabilityPoll').style.display='block'; document.getElementById('createPollButton').style.display='inline'">
-        <label for="availabilityRadio">Availability</label>
-        <input value="yesNo" name="poll-type"type="radio" id="yesNoRadio" onclick="document.getElementById('availabilityPoll').style.display='none'; document.getElementById('createPollButton').style.display='inline'">
-        <label for="yesNoRadio">Yes/No</label>
+            <input value="availability" name="poll-type" type="radio" id="availabilityRadio" onclick="document.getElementById('availabilityPoll').style.display='block'; document.getElementById('createPollButton').style.display='inline'">
+            <label for="availabilityRadio">Availability</label>
+            <input value="yesNo" name="poll-type"type="radio" id="yesNoRadio" onclick="document.getElementById('availabilityPoll').style.display='none'; document.getElementById('createPollButton').style.display='inline'">
+            <label for="yesNoRadio">Yes/No</label>
+        </b>
         <br />
         <div id="availabilityPoll">
             Enter date and time options:
@@ -138,10 +172,10 @@ body {
             <button href="#" onclick="addDate()" id=addButton>Add</button>
             <ul class="showDates"></ul>
         </div>
-        <button id='createPollButton' onclick="createPoll()" style="display: none">Create Poll</button>
-</div>
+        <button class=pollButton id='createPollButton' onclick="createPoll()" style="display: none">Create Poll</button>
+    </div>
 
-<body>
+    <body>
     <div class="poll" id="polls">
         <div class="list-header">
             <h2>Polls</h2>
@@ -149,7 +183,8 @@ body {
         <table id="dateTable" class="dates-table"">
         </table>
     </div>
-</body>
+    </body>
+</div>
 
 <script src="availability.js"></script>
 </html>

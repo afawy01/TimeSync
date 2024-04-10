@@ -9,7 +9,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #5a6cbf;
+            color: #5a6cbf;
         }
         
         .list {
@@ -49,17 +50,55 @@
         
         .list-item:hover {
             background-color: #f9f9f9;
+            border-radius: 10px;
         }
+
+
+    button {
+    margin-left:15px;
+    height:30px;
+    width: auto;
+    padding: 0px 10px;
+    border:2px solid #5a6cbf;
+    margin-top:15px;
+    color: #5a6cbf;
+    background: white;
+    border-radius: 5px;
+    }
+
+    button:hover {
+    background: #5a6cbf;
+    color: white;
+    }
+
+        #back {
+    height:30px;
+    width: auto;
+    padding: 0px 10px;
+    border:2px solid #5a6cbf;
+    margin-top:15px;
+    color: #5a6cbf;
+    background: white;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#back:hover {
+    background: #ddd;
+}
+
+
     </style>
 </head>
 <body>
+<button id=back onclick="location.href='user.html'">Back</button>
     <div class="list">
         <div class="list-header">
             <h2>Teams</h2>
         </div>
-        <ul class="teams-list">
+        <b><ul class="teams-list">
 
-        </ul>
+        </ul></b>
     </div>
 </body>
 <script src="teamlist.js"></script>

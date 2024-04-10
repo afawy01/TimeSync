@@ -32,6 +32,7 @@ body {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: space-between;
+	border-radius: 25px;
 }
 
 /* Event section styling */
@@ -239,10 +240,19 @@ margin: 30px;
 }
 
 #back {
-border-color: #5a6cbf;
-border-radius: 5px;
-color: #5a6cbf;
-height: 25px;
+    height:30px;
+    width: auto;
+    padding: 0px 10px;
+    border:2px solid #5a6cbf;
+    margin-top:15px;
+    color: #5a6cbf;
+    background: white;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#back:hover {
+    background: #ddd;
 }
 
 /* Event Creation */

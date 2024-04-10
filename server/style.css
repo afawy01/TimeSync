@@ -151,6 +151,11 @@ button {
     border-radius: 5px;
 }
 
+button:hover {
+background: #5a6cbf;
+color: white;
+}
+
 input[type="file"] {
     display: none;
 }
