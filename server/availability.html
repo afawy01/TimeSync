@@ -126,11 +126,19 @@ body {
         <br />
         <input type="text" id="pollDescription">
         <br />
-        Enter date and time options:
-        <input type="datetime-local" id=addDate class="option" style="margin-top:10px;">
-        <button href="#" onclick="addDate()" id=addButton>Add</button>
-        <ul class="showDates"></ul>
-        <button href="#" onclick="createPoll()">Create Poll</button>
+        Poll Type:
+        <input value="availability" name="poll-type" type="radio" id="availabilityRadio" onclick="document.getElementById('availabilityPoll').style.display='block'; document.getElementById('createPollButton').style.display='inline'">
+        <label for="availabilityRadio">Availability</label>
+        <input value="yesNo" name="poll-type"type="radio" id="yesNoRadio" onclick="document.getElementById('availabilityPoll').style.display='none'; document.getElementById('createPollButton').style.display='inline'">
+        <label for="yesNoRadio">Yes/No</label>
+        <br />
+        <div id="availabilityPoll">
+            Enter date and time options:
+            <input type="datetime-local" id=addDate class="option" style="margin-top:10px;">
+            <button href="#" onclick="addDate()" id=addButton>Add</button>
+            <ul class="showDates"></ul>
+        </div>
+        <button id='createPollButton' onclick="createPoll()" style="display: none">Create Poll</button>
 </div>
 
 <body>

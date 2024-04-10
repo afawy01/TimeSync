@@ -87,12 +87,15 @@ CREATE TABLE IF NOT EXISTS "UserTeams" (
 	"Role" TEXT,
 	PRIMARY KEY("EntryID" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "AvailabilityPolls" (
+CREATE TABLE IF NOT EXISTS "Polls" (
 	"PollID" INTEGER,
 	"CreatorUserID" INTEGER,
 	"ChannelID" INTEGER,
 	"Title" TEXT,
 	"Description" TEXT,
+	"PollType" TEXT,
+	"CreationDate" DateTime,
+	"EndDate" DateTime,
 	PRIMARY KEY("PollID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "AvailabilityDates" (
@@ -108,6 +111,14 @@ CREATE TABLE IF NOT EXISTS "AvailabilityVotes" (
 	"UserID" INTEGER,
 	"ChannelID" INTEGER,
 	"Date" DATETIME,
+	PRIMARY KEY("VoteID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "YesNoVotes" (
+	"VoteID" INTEGER,
+	"PollID" INTEGER,
+	"UserID" INTEGER,
+	"ChannelID" INTEGER,
+	"Vote" TEXT,
 	PRIMARY KEY("VoteID" AUTOINCREMENT)
 );
 COMMIT;

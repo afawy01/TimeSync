@@ -17,6 +17,7 @@ window.onload = function() {
     .then(data => {
         displayPolls(data)
     })
+    document.getElementById('availabilityPoll').style.display = 'none'
 }
 
 let dates = [];
@@ -41,13 +42,13 @@ function displayDates() {
 }
 
 function createPoll() {
-    console.log(dates)
+    let type = document.querySelector('input[name="poll-type"]:checked').value
     fetch('/api/create-poll', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title: document.getElementById('pollTitle').value, description: document.getElementById('pollDescription').value, dates: dates, channelID: new URLSearchParams(window.location.search).get('id') })
+        body: JSON.stringify({ title: document.getElementById('pollTitle').value, description: document.getElementById('pollDescription').value, dates: dates, channelID: new URLSearchParams(window.location.search).get('id'), type: type })
     })
 }
 
@@ -70,7 +71,7 @@ async function displayPolls(data) {
         dateTable.appendChild(titleRow)
         // Title of availability poll
         let titleText = document.createElement('td')
-        titleText.colSpan = 3
+        titleText.colSpan = 2
         titleText.style.fontSize = "35px"
         titleText.textContent = data.polls[i].Title
         titleRow.appendChild(titleText)
@@ -78,9 +79,64 @@ async function displayPolls(data) {
         let descriptionRow = document.createElement('tr')
         dateTable.append(descriptionRow)
         let descriptionText = document.createElement('td')
-        descriptionText.colSpan = 3
+        descriptionText.colSpan = 2
         descriptionText.textContent = data.polls[i].Description
         descriptionRow.appendChild(descriptionText)
+
+        if (data.polls[i].PollType == "yesNo") {
+            let hasVoted = data.yesnovotes.find((vote) => data.polls[i].PollID == vote.PollID && userID == vote.UserID)
+            let yesnoRow = document.createElement('tr')
+
+            if (!hasVoted) {
+                let yesButton = document.createElement('button')
+                yesButton.value = data.polls[i].PollID
+                yesButton.textContent = "Yes"
+                yesButton.onclick = function() {
+                    fetch('/api/vote-poll', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: yesButton.value, vote: "Yes", type: "yesno" })
+                    })
+                    location.reload()
+                }
+                yesnoRow.appendChild(document.createElement('td').appendChild(yesButton))
+    
+                let noButton = document.createElement('button')
+                noButton.value = data.polls[i].PollID
+                noButton.textContent = "No"
+                noButton.onclick = function() {
+                    fetch('/api/vote-poll', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: noButton.value, vote: "No", type: "yesno" })
+                    })
+                    location.reload()
+                }
+                yesnoRow.appendChild(document.createElement('td').appendChild(noButton))
+            } else {
+                let voteButton = document.createElement('button')
+                voteButton.value = data.polls[i].PollID
+
+                voteButton.onclick = function() {
+                    fetch('/api/remove-vote', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, type: "yesno" })
+                    })
+                    location.reload()
+                }
+                voteButton.textContent = "Remove Vote"
+                yesnoRow.appendChild(document.createElement('td').appendChild(voteButton))
+            }
+
+            dateTable.appendChild(yesnoRow)
+        }
 
 
         let dateItems = data.dates.filter((date) => data.polls[i].PollID == date.PollID)
@@ -92,10 +148,8 @@ async function displayPolls(data) {
             dateTableRow.appendChild(dateItem)
             dateTable.appendChild(dateTableRow)
 
-
             // Check if current date has already been voted on by user
-            let hasVoted = data.votes.find((vote) => dateItems[j].PollID == vote.PollID && dateItems[j].Date == vote.Date && userID == vote.UserID)
-            console.log(hasVoted)
+            let hasVoted = data.availabilityvotes.find((vote) => dateItems[j].PollID == vote.PollID && dateItems[j].Date == vote.Date && userID == vote.UserID)
 
             let voteButton = document.createElement('button')
             voteButton.value = data.polls[i].PollID
@@ -107,7 +161,7 @@ async function displayPolls(data) {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date })
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date, type: "availability" })
                     })
                     location.reload()
                 }
@@ -119,7 +173,7 @@ async function displayPolls(data) {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date })
+                        body: JSON.stringify({ channelID: new URLSearchParams(window.location.search).get('id'), pollID: voteButton.value, date: dateItems[j].Date, type: "availability" })
                     })
                     location.reload()
                 }
@@ -134,71 +188,3 @@ async function displayPolls(data) {
 
 
 }
-
-/*function createPoll() {
-    class Poll {
-        constructor(root, title) {
-            this.root = root;
-            this.selected = sessionStorage.getItem("poll-selected");
-            this.endpoint = "http://localhost:3000/availability.html";
-
-            this.root.insertAdjacentHTML("afterbegin", `
-                <div class="poll__title">${ title }</div>
-            `);
-
-            this._refresh();
-        }
-
-        async _refresh() {
-            const response = await fetch(this.endpoint);
-            const data = await response.json();
-
-            this.root.querySelectorAll(".poll__option").forEach(option => {
-                option.remove();
-            });
-
-            for (const option of dates) {
-                const template = document.createElement("template");
-                const fragment = template.content;
-
-                template.innerHTML = `
-                    <div class="poll__option ${ this.selected == option.label ? "poll__option--selected": "" }">
-                        <div class="poll__option-fill"></div>
-                        <div class="poll__option-info">
-                            <span class="poll__label">${ option.label }</span>
-                            <span class="poll__percentage">${ option.percentage }%</span>
-                        </div>
-                    </div>
-                `;
-
-                if (!this.selected) {
-                    fragment.querySelector(".poll__option").addEventListener("click", () => {
-                        fetch(this.endpoint, {
-                            method: "post",
-                            body: `add=${ option.label }`,
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            }
-                        }).then(() => {
-                            this.selected = option.label;
-
-                            sessionStorage.setItem("poll-selected", option.label);
-
-                            this._refresh();
-                        })
-                    });
-                }
-
-                fragment.querySelector(".poll__option-fill").style.width = `${ option.percentage }%`;
-
-                this.root.appendChild(fragment);
-            }
-        }
-    }
-
-    const p = new Poll(
-        document.querySelector(".poll"),
-        "Choose available meeting times below."
-    );
-
-}*/
