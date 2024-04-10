@@ -56,7 +56,12 @@ app.get('/user', async (req, res) => {
     console.log(info);
     sql = `SELECT * FROM TeamsChannels WHERE ChannelID IN (${info})`;
     const teaminfo = await queryAllDB(sql)
-    res.json({username : req.session.username, teamlist: teamlist, teaminfo: teaminfo, userid: req.session.userId});
+
+    sql = `SELECT ProfilePicture FROM Users WHERE UserID = ${req.session.userId}`
+    db.get(sql, (err, row) => {
+    })
+
+    res.json({username : req.session.username, teamlist: teamlist, teaminfo: teaminfo, userid: req.session.userId, /*profilepicture: imgblob[0]*/});
   } else {
     res.json({error: 'User not logged in'})
   }
@@ -95,6 +100,10 @@ app.get('/profile', (req, res) => {
 
 app.get('/availability', (req, res) => {
   res.sendFile(path.join(__dirname, 'availability.html'))
+})
+
+app.get('/teamcalendar', (req, res) => {
+  res.sendFile(path.join(__dirname, 'teamcalendar.html'))
 })
 
 app.get('/getteam', async (req, res) => {
@@ -193,6 +202,20 @@ app.get('/api/get-user-meetings', (req, res) => {
   })
 })
 
+app.get('/api/get-team-meetings', (req, res) => {
+  const channelID = req.query.id
+  const userID = req.session.userId
+  console.log(channelID)
+
+  const sql = `SELECT * FROM TeamMeetings WHERE ChannelID = ${channelID}`
+  db.all(sql, (err, meetings) => {
+    if (err) {
+      console.error(err.message);
+    }
+    res.json(meetings);
+  })
+})
+
 app.get('/api/get-polls', async (req, res) => {
   const channelID = req.query["id"]
   const userID = req.session.userId
@@ -210,6 +233,19 @@ app.get('/api/get-polls', async (req, res) => {
   const yesnoVotes = await queryAllDB(sql)
 
   res.send({ polls: pollResults, dates: dateResults, availabilityvotes: availabilityVotes, yesnovotes: yesnoVotes })
+})
+
+app.post('/api/change-profile-picture', (req, res) => {
+  let imgblob = req.body
+  const userID = req.session.userId
+
+  const sql = `UPDATE Users SET ProfilePicture = ? WHERE UserID = ${userID}`
+  queryAllDB(sql, `x${imgblob}`)
+  db.run(sql, (err) => {
+    if(err) { console.error(err.message) }
+  })
+
+  res.status(200).send({ message: 'Successfully changed profile picture' })
 })
 
 app.post('/api/change-profile', (req, res) => {
@@ -259,7 +295,6 @@ app.post('/api/remove-member', (req, res) => {
 
 app.post('/api/change-member-role', (req, res) => {
   const { channelID, userID, role } = req.body
-  console.log(req.body)
 
   const sql = `UPDATE UserTeams SET Role = '${role}' WHERE UserID = ${userID} AND ChannelID = ${channelID}`
   db.run(sql, (err) => {
@@ -288,9 +323,36 @@ app.post('/api/add-user-meeting', (req, res) => {
 app.post('/api/remove-user-meeting', (req, res) => {
   const { meetingID } = req.body
   const userID = req.session.userId
-  console.log(meetingID)
 
   const sql = `DELETE FROM UserMeetings WHERE UserID = ${userID} AND MeetingID = ${meetingID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      res.status(200).send({ message: 'User meeting deleted successfully.'})
+    }
+  })
+})
+
+app.post('/api/add-team-meeting', (req, res) => {
+  const { title, description, date, channelID } = req.body
+  const userID = req.session.userId
+
+  const sql = `INSERT INTO TeamMeetings (CreatorUserID, Title, Description, MeetingDate, ChannelID) VALUES (?, ?, ?, ?, ?)`;
+  db.run(sql, [userID, title, description, date, channelID], function(err) {
+    if(err) {
+      return console.error(err.message);
+    }
+    res.status(200).send({ message: 'Team meeting saved successfully.' })
+  })
+
+})
+
+app.post('/api/remove-team-meeting', (req, res) => {
+  const { meetingID, channelID } = req.body
+  const userID = req.session.userId
+
+  const sql = `DELETE FROM TeamMeetings WHERE ChannelID = ${channelID} AND MeetingID = ${meetingID}`
   db.run(sql, (err) => {
     if (err) {
       console.error(err.message)
@@ -564,3 +626,5 @@ app.post("/poll", async (req, res) => {
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
+
+module.exports = app;

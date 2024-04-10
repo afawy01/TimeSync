@@ -11,17 +11,38 @@ function updateProfile() {
     }
     if (email.length > 0) {
         data.email = email
-    } 
+    }
 
     fetch('/api/change-profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: data
     }).then(response => {
-        if (response.status(200)) {
-            // TODO: do stuff on screen to indicate success
+
+    })
+}
+
+document.getElementById('img').addEventListener("change", function() {
+    const img = URL.createObjectURL(document.getElementById('img').files[0])
+    document.getElementById('profilePic').src = img
+    fetch('/api/change-profile-picture', {
+        method: 'POST',
+        body: document.getElementById('img').files[0]
+    })
+})
+
+window.onload = function() {
+    fetch('/user', {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.profilepicture) {
+            console.log('a')
+            document.getElementById('profilePic').src = URL.createObjectURL(data.profilepicture.ProfilePicture)
         }
+        console.log(typeof(data.profilepicture.ProfilePicture))
     })
 }

@@ -25,6 +25,9 @@ window.onload = async function() {
         const team = userData["teamlist"].find((team) => team["ChannelID"] == teamID)
         console.log(team)
         if (team["Role"] == "Owner") {
+
+        } else {
+            document.getElementById('disbandTeam').style.display = 'none'
         }
 
         // List team members on page

@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS "Users" (
 	"Password"	TEXT NOT NULL,
 	"Email"	TEXT NOT NULL,
 	"Role"	TEXT NOT NULL,
-	"ProfilePicture" BLOB,
 	PRIMARY KEY("UserID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "TeamsChannels" (
@@ -62,13 +61,14 @@ CREATE TABLE IF NOT EXISTS "SupportTickets" (
 	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
 	PRIMARY KEY("TicketID" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "TeamMeetings" (
+CREATE TABLE IF NOT EXISTS "Meetings" (
 	"MeetingID"	INTEGER,
 	"Title"	TEXT NOT NULL,
 	"Description"	TEXT,
 	"MeetingDate"	DATETIME NOT NULL,
-	"CreatorUserID"	INTEGER NOT NULL,
+	"UserID"	INTEGER NOT NULL,
 	"ChannelID"	INTEGER NOT NULL,
+	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
 	FOREIGN KEY("ChannelID") REFERENCES "Channels"("ChannelID"),
 	PRIMARY KEY("MeetingID" AUTOINCREMENT)
 );
@@ -87,15 +87,12 @@ CREATE TABLE IF NOT EXISTS "UserTeams" (
 	"Role" TEXT,
 	PRIMARY KEY("EntryID" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "Polls" (
+CREATE TABLE IF NOT EXISTS "AvailabilityPolls" (
 	"PollID" INTEGER,
 	"CreatorUserID" INTEGER,
 	"ChannelID" INTEGER,
 	"Title" TEXT,
 	"Description" TEXT,
-	"PollType" TEXT,
-	"CreationDate" DateTime,
-	"EndDate" DateTime,
 	PRIMARY KEY("PollID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "AvailabilityDates" (
@@ -111,14 +108,6 @@ CREATE TABLE IF NOT EXISTS "AvailabilityVotes" (
 	"UserID" INTEGER,
 	"ChannelID" INTEGER,
 	"Date" DATETIME,
-	PRIMARY KEY("VoteID" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "YesNoVotes" (
-	"VoteID" INTEGER,
-	"PollID" INTEGER,
-	"UserID" INTEGER,
-	"ChannelID" INTEGER,
-	"Vote" TEXT,
 	PRIMARY KEY("VoteID" AUTOINCREMENT)
 );
 COMMIT;

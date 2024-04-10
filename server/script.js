@@ -105,8 +105,6 @@ window.onload = function() {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById("welcomeText").textContent = `Welcome ${data.username}!`
-
         const teamListButton = document.getElementById("teamListButton");
         const loginButton = document.getElementById("loginButton");
         const logoutButton = document.getElementById("logoutButton");
@@ -122,6 +120,7 @@ window.onload = function() {
             joinGroupButton.style.display = "block";
             calendarButton.style.display = "block";
             profileButton.style.display = "block";
+            document.getElementById("welcomeText").textContent = `Welcome ${data.username}!`
         } else {
             loginButton.style.display = "block";
             teamListButton.style.display = "none";

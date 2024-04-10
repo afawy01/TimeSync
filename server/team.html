@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="team.css">
 <button class="tab" onclick="window.location.href=`/team?id=${new URLSearchParams(window.location.search).get('id')}`">Chat</button>
 <button class="tab" onclick="window.location.href=`/availability?id=${new URLSearchParams(window.location.search).get('id')}`">Availability</button>
-<button class="tab">Calendar</button>
+<button class="tab" onclick="window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`">Calendar</button>
 <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`">Settings</button>
 
 <div class="chatroom">
