@@ -1,7 +1,7 @@
 let events = [];
 
 window.onload = async function() {
-	await fetch('/api/get-team-meetings', {
+	await fetch(`/api/get-team-meetings?id=${new URLSearchParams(window.location.search).get('id')}`, {
 		method: 'GET'
 	})
 	.then(response => response.json())
@@ -45,10 +45,10 @@ function addEvent() {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ title: title, description: description, date: date })
+			body: JSON.stringify({ title: title, description: description, date: date, channelID: new URLSearchParams(window.location.search).get('id') })
 		}).then(response => {
 			if (response.status == 200) {
-				window.location.href='/calendar.html'
+				window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`
 			}
 		})
 
@@ -74,15 +74,15 @@ function deleteEvent(eventId) {
 		displayReminders();
 	}
 	console.log(eventId)
-	fetch('/api/remove-user-meeting', {
+	fetch('/api/remove-team-meeting', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ meetingID: eventId })
+		body: JSON.stringify({ meetingID: eventId, channelID: new URLSearchParams(window.location.search).get('id') })
 	}).then(response => {
 		if (response.status == 200) {
-			window.location.href='/calendar.html'
+			window.location.href=`/teamcalendar?id=${new URLSearchParams(window.location.search).get('id')}`
 		}
 	})
 }

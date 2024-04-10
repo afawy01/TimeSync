@@ -203,9 +203,11 @@ app.get('/api/get-user-meetings', (req, res) => {
 })
 
 app.get('/api/get-team-meetings', (req, res) => {
+  const channelID = req.query.id
   const userID = req.session.userId
+  console.log(channelID)
 
-  const sql = `SELECT * FROM UserMeetings WHERE UserID = ${userID}`
+  const sql = `SELECT * FROM TeamMeetings WHERE ChannelID = ${channelID}`
   db.all(sql, (err, meetings) => {
     if (err) {
       console.error(err.message);
@@ -334,13 +336,27 @@ app.post('/api/add-team-meeting', (req, res) => {
   const userID = req.session.userId
 
   const sql = `INSERT INTO TeamMeetings (CreatorUserID, Title, Description, MeetingDate, ChannelID) VALUES (?, ?, ?, ?, ?)`;
-  db.run(sql, [userID, title, description, date], function(err) {
+  db.run(sql, [userID, title, description, date, channelID], function(err) {
     if(err) {
       return console.error(err.message);
     }
-    res.status(200).send({ message: 'User meeting saved successfully.' })
+    res.status(200).send({ message: 'Team meeting saved successfully.' })
   })
 
+})
+
+app.post('/api/remove-team-meeting', (req, res) => {
+  const { meetingID, channelID } = req.body
+  const userID = req.session.userId
+
+  const sql = `DELETE FROM TeamMeetings WHERE ChannelID = ${userID} AND MeetingID = ${meetingID}`
+  db.run(sql, (err) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      res.status(200).send({ message: 'User meeting deleted successfully.'})
+    }
+  })
 })
 
 app.post('/api/delete-team', (req, res) => {
