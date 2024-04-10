@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./team.css">
+  <title>Teams</title>
+  <style>
+    /* Style the popup for support ticket creation */
+    .support-popup {
+      display: none;
+      position: fixed;
+      padding: 16px;
+      width: 350px;
+      left: 50%;
+      margin-left: -175px;
+      top: 50%;
+      margin-top: -100px;
+      background: #fff;
+      border: 3px solid #F04A49;
+      z-index: 20;
+    }
+
+    #support-popup:after {
+      position: fixed;
+      content: "";
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -2;
+    }
+
+    #support-popup:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: #fff;
+      z-index: -1;
+    }
+
+    /* Style elements within the support ticket creation popup */
+    .support-popup h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .support-popup label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .support-popup input[type="text"],
+    .support-popup textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    .support-popup button {
+      background-color: #F04A49;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      border: none;
+      display: inline-block;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .support-popup button:hover {
+      background-color: #da3339;
+    }
+
+    /* Additional styles for success/error messages */
+    .support-message {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      color: green;
+    }
+
+    .error-message {
+      color: red;
+    }
+  </style>
+  <script src="support.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 id="welcomeText" style="text-align: center;"></h1>
+    </div>
+    <img src="timesync_logo.png" width="10%" height="10%" style="margin-left: auto; margin-right: auto; display: block;">
+    <div class="tabs">
+      <div id="teamListButton" class="tab" onclick="location.href='teamlist'"><b>Teams</b></div>
+      <div id="groupButton" class="tab" onclick="openGroupForm()"><b>Create Team</b></div>
+      <div id="joinGroupButton" class="tab" onclick="openGroupJoinForm()"><b>Join Team</b></div>
+      <div id="loginButton" class="tab" onclick="location.href='login'"><b>Login</b></div>
+    </div>
+    <div class="tabs">
+      <div id="calendarButton" class="tab" onclick="location.href='calendar.html'"><b>Personal Calendar</b></div>
+      <div id="profileButton" class="tab" onclick="location.href='/profile'"><b>Profile</b></div>
+    </div>
+    <div class="meeting-room"></div>
+    <div class
