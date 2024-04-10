@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "Users" (
 	"Password"	TEXT NOT NULL,
 	"Email"	TEXT NOT NULL,
 	"Role"	TEXT NOT NULL,
+	"ProfilePicture" BLOB,
 	PRIMARY KEY("UserID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "TeamsChannels" (
@@ -61,14 +62,13 @@ CREATE TABLE IF NOT EXISTS "SupportTickets" (
 	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
 	PRIMARY KEY("TicketID" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "Meetings" (
+CREATE TABLE IF NOT EXISTS "TeamMeetings" (
 	"MeetingID"	INTEGER,
 	"Title"	TEXT NOT NULL,
 	"Description"	TEXT,
 	"MeetingDate"	DATETIME NOT NULL,
-	"UserID"	INTEGER NOT NULL,
+	"CreatorUserID"	INTEGER NOT NULL,
 	"ChannelID"	INTEGER NOT NULL,
-	FOREIGN KEY("UserID") REFERENCES "Users"("UserID"),
 	FOREIGN KEY("ChannelID") REFERENCES "Channels"("ChannelID"),
 	PRIMARY KEY("MeetingID" AUTOINCREMENT)
 );

@@ -3,10 +3,13 @@
 <title>Profile</title>
 <button onclick="location.href='/'">Back</button>
 <div style="margin:15px;">
-    <div id=profilepic style="padding-bottom:10px;">
+    <div style="padding-bottom:10px;">
+       <div style="border-radius: 50%; overflow: hidden; width: 100px; height: 100px;">
+              <img id="profilePic" style="display: inline; margin: 0 auto; height: 100%; width: auto;">
+       </div>
         <p style="margin:0 auto;">Update Profile Picture:</p>
         <input type=file
-               id=img>
+               id=img accept="image/*">
     </div>
     <input type=text
            id=updateUser
