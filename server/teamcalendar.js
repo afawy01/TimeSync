@@ -6,7 +6,6 @@ window.onload = async function() {
 	})
 	.then(response => response.json())
 	.then(data => {
-		console.log(data)
 		events = data
 		// Call the showCalendar function initially to display the calendar
 		showCalendar(currentMonth, currentYear);
