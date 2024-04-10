@@ -10,27 +10,38 @@ window.onload = function() {
             return
         }
 
-        console.log(data)
-
-        loadChatroom()
+        loadChatroom(data)
     })
 }
 
-function loadChatroom() {
+function loadChatroom(data) {
     const teamID = new URLSearchParams(window.location.search).get('id');
     fetch(`/api/chat-logs?id=${teamID}`)
     .then(response => response.json())
     .then(chatLogs => {
         if(chatLogs["error"]) {return}
-        const chatroom = document.querySelector('.chat-messages');
-        chatroom.innerHTML = '';
-        chatLogs.forEach(log => {
-            const messageElement = document.createElement('li');
-            messageElement.textContent = log.MessageText;
+        const chatMessages = document.getElementById("chat-messages")
+
+        for (let i = 0; i < chatLogs.length; i++) {
+            const messageElement = document.createElement('div');
+            if (i%2 == 0) {
+                messageElement.className = "container"
+            } else {
+                messageElement.className = "container darker"
+            }
+            const messageText = document.createElement('p')
+            messageText.textContent = chatLogs[i].MessageText;
+            messageElement.appendChild(messageText)
+
+            const usernameText = document.createElement('span')
+            usernameText.className = "time-left"
+            // Find user who sent message
+            usernameText.textContent = data.memberinfo.find((member) => member.UserID == chatLogs[i].UserID).Username
+            messageElement.appendChild(usernameText)
             // TODO: Check if user is the one who sent message
-            if (log.UserID)
-            chatroom.appendChild(messageElement);
-        });
+            if (chatLogs[i].UserID)
+            chatMessages.appendChild(messageElement);
+        }
     })
     .catch(error => console.error('Error loading chat logs:', error));
 }
