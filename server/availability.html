@@ -175,12 +175,29 @@ body {
         <button class=pollButton id='createPollButton' onclick="createPoll()" style="display: none">Create Poll</button>
     </div>
 
+    <div class="popup" id="pollResultPopup">
+
+        <span onclick="document.getElementById('pollResultPopup').style.display = 'none'" class="close" id="closePopup">&times;</span>
+
+        <div class="popup-content">
+
+            <p style="color: #5a6cbf; font-size:20px;"><b>Results</b></p>
+
+            <div id = "resultText">
+
+                <ul id= "userVotes">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <body>
     <div class="poll" id="polls">
         <div class="list-header">
             <h2>Polls</h2>
         </div>
-        <table id="dateTable" class="dates-table"">
+        <table id="dateTable" class="dates-table">
         </table>
     </div>
     </body>

@@ -188,8 +188,8 @@ async function displayPolls(data) {
         }
 
         const role = teamlist.find((member) => member.UserID == userID)
+        const deleteRow = document.createElement('tr')
         if (role.Role == "Owner" || role.Role == "Admin") {
-            const deleteRow = document.createElement('tr')
             let deleteButton = document.createElement('button')
             deleteButton.value = data.polls[i].PollID
             deleteButton.textContent = "Delete Poll"
@@ -207,8 +207,50 @@ async function displayPolls(data) {
             dateTable.appendChild(deleteRow)
         }
 
+        const resultButton = document.createElement('button')
+        resultButton.textContent = "See Results"
+        resultButton.value = data.polls[i].PollID
+        resultButton.onclick = function() {
+            // Clean up tags for new result button click
+            document.getElementById('userVotes').innerHTML = ''
+
+            document.getElementById('pollResultPopup').style.display = 'block'
+
+            const poll = data.polls.find((poll) => poll.PollID == resultButton.value)
+            let votes;
+
+            if (poll.PollType == "yesNo") {
+                votes = data.yesnovotes
+            } else if (poll.PollType == "availability") {
+                votes = data.availabilityvotes
+            }
+
+            votes = votes.filter((vote) => vote.PollID == resultButton.value)
+
+            const memberInfo = fetch(`/getteam?id=${new URLSearchParams(window.location.search).get('id')}`, {
+                method: "GET",
+            })
+            .then(response => response.json())
+            .then(data => {
+                for (let i = 0; i < votes.length; i++) {
+                    const voterID = votes[i].UserID
+                    const voterUsername = data.memberinfo.find((member) => member.UserID == voterID).Username
+                    let voteText = document.createElement('li')
+                    if (poll.PollType == "yesNo") {
+                        voteText.textContent = `'${voterUsername}' voted for ${votes[i].Vote}`
+                    } else {
+                        voteText.textContent = `'${voterUsername}' voted for ${new Date(votes[i].Date).toLocaleString()}`
+                    }
+                    document.getElementById('userVotes').appendChild(voteText)
+                }
+            })
+
+            console.log(memberInfo)
+        }
+
+        deleteRow.appendChild(document.createElement('td').appendChild(resultButton))
+
         document.getElementById("polls").appendChild(poll)
     }
-
 
 }
