@@ -14,7 +14,7 @@ const db = new sqlite3.Database('./TimeSync.db', (err) => {
 })
 
 // Query db and await results before continuing
-function queryAllDB(query, params) {
+function queryAllDB(query, params = []) {
   return new Promise((resolve, reject) => {
     db.all(query, params, (err, rows) => {
       if(err) {
@@ -191,6 +191,22 @@ app.get('/api/get-user-meetings', (req, res) => {
     }
     res.json(meetings);
   })
+})
+
+app.get('/api/get-polls', async (req, res) => {
+  const channelID = req.query["id"]
+  const userID = req.session.userId
+
+  let sql = `SELECT * FROM AvailabilityPolls WHERE ChannelID = ${channelID}`
+  const pollResults = await queryAllDB(sql)
+
+  sql = `SELECT * FROM AvailabilityDates WHERE ChannelID = ${channelID}`
+  const dateResults = await queryAllDB(sql)
+
+  sql = `SELECT * FROM AvailabilityVotes WHERE ChannelID = ${channelID}`
+  const voteResults = await queryAllDB(sql)
+
+  res.send({ polls: pollResults, dates: dateResults, vote: voteResults })
 })
 
 app.post('/api/change-profile', (req, res) => {
@@ -441,6 +457,30 @@ app.post('/joingroup', (req, res) => {
       res.send({ message: 'Group with that code does not exist'});
     }
   })
+})
+
+app.post('/api/create-poll', (req, res) => {
+  const { title, description, dates, channelID } = req.body
+  const userID = req.session.userId
+
+  let sql = `INSERT INTO AvailabilityPolls (CreatorUserID, ChannelID, Title, Description) VALUES (?, ?, ?, ?)`
+  db.run(sql, [userID, channelID, title, description], function(err) {
+    if(err) {return console.error(err.message)}
+    let pollID = this.lastID
+
+    for (let i = 0; i < dates.length; i++) {
+      sql = `INSERT INTO AvailabilityDates (PollID, Date, ChannelID) VALUES (?, ?, ?)`
+      db.run(sql, [pollID, dates[i], channelID], function(err) {
+        if (err) {return console.error(err.message) }
+      })
+      //res.status(200).send({ message: 'Successfully created poll' })
+    }
+  })
+})
+
+app.post('/api/vote-poll', (req, res) => {
+  const { pollID } = req.body
+  const userID = req.session.userId
 })
 
 //Polling stuff

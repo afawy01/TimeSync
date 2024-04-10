@@ -118,6 +118,14 @@ body {
 
 <div class="popup" id="popup">
     <span style="padding-left:275px;" onclick="hide('popup')">&times;</span>
+        Title:
+        <br />
+        <input type="text" id="pollTitle">
+        <br />
+        Description:
+        <br />
+        <input type="text" id="pollDescription">
+        <br />
         Enter date and time options:
         <input type="datetime-local" id=addDate class="option" style="margin-top:10px;">
         <button href="#" onclick="addDate()" id=addButton>Add</button>
@@ -126,8 +134,12 @@ body {
 </div>
 
 <body>
-    <div class="poll">
-
+    <div class="poll" id="polls">
+        <div class="list-header">
+            <h2>Polls</h2>
+        </div>
+        <table id="dateTable" class="dates-table">
+        </table>
     </div>
 </body>
 

@@ -9,6 +9,16 @@ var hide = function(id) {
 	$(id).style.display ='none';
 }
 
+window.onload = function() {
+    fetch(`/api/get-polls?id=${new URLSearchParams(window.location.search).get('id')}`, {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayPolls(data)
+    })
+}
+
 let dates = [];
 
 function addDate() {
@@ -31,6 +41,55 @@ function displayDates() {
 }
 
 function createPoll() {
+    console.log(dates)
+    fetch('/api/create-poll', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: document.getElementById('pollTitle').value, description: document.getElementById('pollDescription').value, dates: dates, channelID: new URLSearchParams(window.location.search).get('id') })
+    })
+}
+
+function displayPolls(data) {
+
+    for (let i = 0; i < data.polls.length; i++) {
+        let poll = document.createElement('div')
+        let dateTable = document.getElementById('dateTable')
+
+        let titleRow = document.createElement('tr')
+        dateTable.appendChild(titleRow)
+        let titleText = document.createElement('td')
+        titleText.colSpan = 3
+        titleText.style.fontSize = "35px"
+        titleText.textContent = data.polls[i].Title
+        titleRow.appendChild(titleText)
+
+
+        let dateItems = data.dates.filter((date) => data.polls[i].PollID == date.PollID)
+        for (let j = 0; j < dateItems.length; j++) {
+            let dateTableRow = document.createElement('tr')
+            let dateItem = document.createElement('td')
+            console.log(dateItems[j].Date)
+            dateItem.textContent = dateItems[j].Date
+            dateTableRow.appendChild(dateItem)
+            dateTable.appendChild(dateTableRow)
+
+            let voteButton = document.createElement('button')
+            voteButton.onclick = function() {
+    
+            }
+            voteButton.textContent = "Vote"
+            dateTableRow.appendChild(voteButton)
+        }
+
+        document.getElementById("polls").appendChild(poll)
+    }
+
+
+}
+
+/*function createPoll() {
     class Poll {
         constructor(root, title) {
             this.root = root;
@@ -96,4 +155,4 @@ function createPoll() {
         "Choose available meeting times below."
     );
 
-}
+}*/
