@@ -49,6 +49,7 @@ window.onload = async function() {
                 let leaveButton = document.createElement("button")
                 leaveButton.textContent = "Leave"
                 leaveButton.value = data["teammembers"][i]["UserID"]
+                leaveButton.classList.add('pollButton')
                 leaveButton.onclick = function() {
                     fetch(`/api/remove-member`), {
                         method: 'POST',
@@ -69,6 +70,7 @@ window.onload = async function() {
                 if (team["Role"] == "Owner") {
                     // Admin exclusive actions
                     let changeRoleButton = document.createElement("button")
+                    changeRoleButton.classList.add('pollButton')
                     if (data["teammembers"][i]["Role"] == "Member") {
                         changeRoleButton.textContent = "Promote to Admin"
                         changeRoleButton.value = `${data["teammembers"][i]["UserID"]},Admin`
@@ -88,6 +90,7 @@ window.onload = async function() {
                         let kickButton = document.createElement("button")
                         kickButton.textContent = "Kick"
                         kickButton.value = data["teammembers"][i]["UserID"]
+                        kickButton.classList.add('pollButton')
                         kickButton.onclick = function() {
                             document.getElementById('kickConfirmation').style.display = 'block';
                             document.getElementById('kickConfirmation').value = kickButton.value;

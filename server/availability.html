@@ -57,6 +57,7 @@ body {
   cursor: pointer;
   color: #5a6cbf;
   border: 3px solid white;
+  margin-bottom:5px;
 }
 
 .tab:hover {
@@ -114,13 +115,11 @@ body {
     width: auto;
     padding: 0px 10px;
     border:2px solid #5a6cbf;
-    margin-top:15px;
+    margin:2px;
     color: #5a6cbf;
     background: white;
     border-radius: 5px;
 }
-
-
 
 .pollButton:hover {
     background: #5a6cbf;
@@ -130,10 +129,11 @@ body {
 .container{
     background: white;
     border-radius: 25px;
-    width: 700px;
+    max-width: 700px;
     padding-bottom: 30px;
     margin:auto;
 }
+
 
 </style>
 
@@ -145,8 +145,8 @@ body {
     <button class="tab" onclick="window.location.href = `/teamsettings?id=${new URLSearchParams(window.location.search).get('id')}`"><b>Settings</b></button>
 </div>
 <br />
-<div class=container>
-    <button class="pollButton" href="#" onclick="show('popup')">Create Poll</button>
+<div class=container style="">
+    <button class="pollButton" href="#" onclick="show('popup')" style="margin-top:20px;">Create Poll</button>
 
     <div class="popup" id="popup">
         <b>

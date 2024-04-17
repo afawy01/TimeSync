@@ -95,6 +95,7 @@ async function displayPolls(data) {
                 let yesButton = document.createElement('button')
                 yesButton.value = data.polls[i].PollID
                 yesButton.textContent = "Yes"
+                yesButton.classList.add('pollButton')
                 yesButton.onclick = function() {
                     fetch('/api/vote-poll', {
                         method: "POST",
@@ -110,6 +111,7 @@ async function displayPolls(data) {
                 let noButton = document.createElement('button')
                 noButton.value = data.polls[i].PollID
                 noButton.textContent = "No"
+                noButton.classList.add('pollButton')
                 noButton.onclick = function() {
                     fetch('/api/vote-poll', {
                         method: "POST",
@@ -124,6 +126,7 @@ async function displayPolls(data) {
             } else {
                 let voteButton = document.createElement('button')
                 voteButton.value = data.polls[i].PollID
+                voteButton.classList.add('pollButton')
 
                 voteButton.onclick = function() {
                     fetch('/api/remove-vote', {
@@ -157,6 +160,7 @@ async function displayPolls(data) {
 
             let voteButton = document.createElement('button')
             voteButton.value = data.polls[i].PollID
+            voteButton.classList.add('pollButton')
             // If not voted, display vote button
             if (!hasVoted) {
                 voteButton.onclick = function() {
@@ -193,6 +197,7 @@ async function displayPolls(data) {
             let deleteButton = document.createElement('button')
             deleteButton.value = data.polls[i].PollID
             deleteButton.textContent = "Delete Poll"
+            deleteButton.classList.add('pollButton')
             deleteButton.onclick = function() {
                 fetch('/api/remove-poll', {
                     method: "POST",
@@ -210,6 +215,7 @@ async function displayPolls(data) {
         const resultButton = document.createElement('button')
         resultButton.textContent = "See Results"
         resultButton.value = data.polls[i].PollID
+        resultButton.classList.add('pollButton')
         resultButton.onclick = function() {
             // Clean up tags for new result button click
             document.getElementById('userVotes').innerHTML = ''
